@@ -1,13 +1,9 @@
 import { View } from "react-native"
 import { Text, TextInput, Button } from "react-native-paper"
+import { UserNavProps } from "../utils/types"
 
-export type UserProps = {
-    login?: {
-        username: string,
-    }
-}
 
-export default function User({ route }) {
+export default function User({ route }: UserNavProps) {
     const login = route.params.login
     if (login === undefined) return (
         <View style={{flex: 1, justifyContent: 'center', margin: 30, gap: 20}}>
