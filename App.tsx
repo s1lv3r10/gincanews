@@ -5,14 +5,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Home from './components/Home';
-
 import User from './components/User';
-import { UserProps } from './components/User';
 
-const Stack = createBottomTabNavigator<{
-  Gincanews: undefined,
-  Usuário: UserProps, 
-}, 'Nav'>()
+import { BottomTabParams } from './utils/types';
+
+const Stack = createBottomTabNavigator<BottomTabParams, 'Nav'>()
 
 function RootStack() {
   return (
@@ -27,7 +24,7 @@ function RootStack() {
       }}
     >
       <Stack.Screen name='Gincanews' component={Home} />
-      <Stack.Screen name='Usuário' component={User} initialParams={{login: {username:'A'}}} />
+      <Stack.Screen name='User' component={User} options={{title: 'Central de contas'}} initialParams={{login: {username:'A'}}} />
     </Stack.Navigator>
   )
 }
