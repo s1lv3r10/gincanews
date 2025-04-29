@@ -1,10 +1,16 @@
 import { View } from "react-native"
 import { Text, TextInput, Button } from "react-native-paper"
 
-export default function User() {
-    return (
+export type UserProps = {
+    login?: {
+        username: string,
+    }
+}
+
+export default function User({ route }) {
+    const login = route.params.login
+    if (login === undefined) return (
         <View style={{flex: 1, justifyContent: 'center', margin: 30, gap: 20}}>
-            { /* se nao tiver logado, aparece login ao invés da central de conta */ }
             <View style={{alignItems: 'center'}}>
                 <Text variant="displayMedium">Fazer Login</Text>
             </View>
@@ -28,6 +34,11 @@ export default function User() {
                     <Text style={{color: '#458cff', fontWeight: 'bold'}}> Clique aqui</Text> para criar uma!
                 </Text>
             </View>
+        </View>
+    )
+    else return (
+        <View style={{flex: 1, justifyContent: 'center', margin: 30, gap: 20}}>
+            <Text>logado, {login.username}</Text>
         </View>
     )
 }

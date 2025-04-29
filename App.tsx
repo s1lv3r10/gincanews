@@ -3,12 +3,15 @@ import { StyleSheet, Text, View } from 'react-native';
 import { PaperProvider, MD3DarkTheme } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import Home from './components/Home';
+
 import User from './components/User';
+import { UserProps } from './components/User';
 
 const Stack = createBottomTabNavigator<{
   Gincanews: undefined,
-  Usuário: undefined
+  Usuário: UserProps, 
 }, 'Nav'>()
 
 function RootStack() {
@@ -24,7 +27,7 @@ function RootStack() {
       }}
     >
       <Stack.Screen name='Gincanews' component={Home} />
-      <Stack.Screen name='Usuário' component={User} />
+      <Stack.Screen name='Usuário' component={User} initialParams={{login: {username:'A'}}} />
     </Stack.Navigator>
   )
 }
