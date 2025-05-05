@@ -17,7 +17,7 @@
 -- Banco de dados: `sds_tcc`
 --
 
-CREATE TABLE IF NOT EXISTS `sds_tcc`;
+CREATE DATABASE IF NOT EXISTS `sds_tcc`;
 USE `sds_tcc`;
 
 -- --------------------------------------------------------
