@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-import getUsers from "./database/userService"; //importa a função
+import getUsers from "./database/userService";
 import userRoutes from "./routes/userroutes";
 
 const app = express();
