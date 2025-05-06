@@ -8,19 +8,21 @@ export default function User({ route }: UserNavProps) {
     const login = route?.params?.login;
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [userData, setUserData] = useState(null);
+    const [userData, setUserData] = useState(undefined);
     const [error, setError] = useState("");
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post("http://localhost:3306/api/login", {
+            const response = await axios.post("http://localhost:3000/api/login", {
                 username,
                 password
             });
-
+            console.log(response)
             if (response.data) {
                 setUserData(response.data);
+                setUsername(response.data.nome_user)
                 setError("");
+                console.log(userData)
             } else {
                 setError("Usuário ou senha incorretos.");
             }
