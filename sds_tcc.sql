@@ -3,9 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 29/04/2025 às 21:25
+-- Tempo de geração: 06/05/2025 às 00:32
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -16,7 +20,6 @@
 --
 -- Banco de dados: `sds_tcc`
 --
-
 CREATE DATABASE IF NOT EXISTS `sds_tcc`;
 USE `sds_tcc`;
 
@@ -26,13 +29,27 @@ USE `sds_tcc`;
 -- Estrutura para tabela `agendamento`
 --
 
-
 CREATE TABLE `agendamento` (
   `id_ag` int(11) NOT NULL,
   `em_ag` varchar(4) DEFAULT NULL,
   `data_ag` datetime DEFAULT NULL,
   `desc_ag` varchar(300) DEFAULT NULL,
   `id_user` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `esportivas`
+--
+
+CREATE TABLE `esportivas` (
+  `id_esp` int(11) NOT NULL,
+  `ano_esp` year(4) DEFAULT NULL,
+  `vencedor_esp` varchar(200) DEFAULT NULL,
+  `chave_esp` varchar(200) DEFAULT NULL,
+  `descricao_esp` varchar(500) DEFAULT NULL,
+  `times_esp` varchar(600) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -125,6 +142,12 @@ ALTER TABLE `agendamento`
   ADD KEY `id_user` (`id_user`);
 
 --
+-- Índices de tabela `esportivas`
+--
+ALTER TABLE `esportivas`
+  ADD PRIMARY KEY (`id_esp`);
+
+--
 -- Índices de tabela `midia`
 --
 ALTER TABLE `midia`
@@ -160,6 +183,12 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `agendamento`
   MODIFY `id_ag` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `esportivas`
+--
+ALTER TABLE `esportivas`
+  MODIFY `id_esp` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `midia`
