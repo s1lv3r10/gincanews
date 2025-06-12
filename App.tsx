@@ -27,9 +27,14 @@ function RootStack() {
       <Stack.Screen name='Gincanews' component={Home} 
         options={{title: 'Inicio'}}
       />
+      <Stack.Screen name='Calendario' component={User} 
+        options={{title: 'Calendario'}} 
+      />
+      <Stack.Screen name='Eventos' component={User} 
+        options={{title: 'Eventos'}} 
+      />
       <Stack.Screen name='User' component={User} 
         options={{title: 'Central de contas'}} 
-        initialParams={{login: {username:'A'}}} 
       />
     </Stack.Navigator>
   )
@@ -37,19 +42,10 @@ function RootStack() {
 
 export default function App() {
   return (
-    <PaperProvider theme={MainTheme}>
       <NavigationContainer>
-        <RootStack />
+        <PaperProvider theme={MainTheme}>
+            <RootStack />
+        </PaperProvider>
       </NavigationContainer>
-    </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

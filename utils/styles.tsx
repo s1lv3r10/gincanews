@@ -6,8 +6,12 @@ export const MainTheme = {
     colors: {
         ...BaseTheme.colors,
         // cores cps etc
+        vermelhoPrincipal: '#911919',
+        cinzaPrincipal: '#383636',
     }
 }
+
+export type ThemeType = typeof MainTheme;
 
 export const ContainerStyles = StyleSheet.create({
     default: {
