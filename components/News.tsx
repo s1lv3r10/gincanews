@@ -27,6 +27,7 @@ export default function News() {
                                 Postado por "Coordenação" em 05/05
                             </Text>
                         </Card.Content>
+                         <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
                     </Card>
                 </TouchableRipple>
 
