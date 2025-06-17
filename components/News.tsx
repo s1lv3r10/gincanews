@@ -23,22 +23,27 @@ export default function News() {
                             <Text variant="titleMedium" style={ContainerStyles.cardTitle2}>
                                 Como abrir recursos?
                             </Text>
+                        </Card.Content>
+                        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                        <Card.Content>
                             <Text variant="titleSmall" style={ContainerStyles.cardSubTitle}>
                                 Postado por "Coordenação" em 05/05
                             </Text>
                         </Card.Content>
-                         <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
                     </Card>
                 </TouchableRipple>
 
                 <TouchableRipple onPress={() => navigation.navigate('Calendario')} borderless>
                     <Card style={ContainerStyles.cardNews}>
                         <Card.Content>
-                            <Text variant="titleMedium" style={ContainerStyles.cardText}>
-                                Cosplay, veja ganhadores
+                            <Text variant="titleMedium" style={ContainerStyles.cardTitle2}>
+                                Vencedores do Cosplay
                             </Text>
-                            <Text variant="titleSmall" style={ContainerStyles.cardText}>
-                                Postado por "Coordenação" em 07/05
+                        </Card.Content>
+                        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                        <Card.Content>
+                            <Text variant="titleSmall" style={ContainerStyles.cardSubTitle}>
+                                Postado por "Coordenação" em 05/05
                             </Text>
                         </Card.Content>
                     </Card>
@@ -47,10 +52,13 @@ export default function News() {
                 <TouchableRipple onPress={() => navigation.navigate('Calendario')} borderless>
                     <Card style={ContainerStyles.cardNews}>
                         <Card.Content>
-                            <Text variant="titleMedium" style={ContainerStyles.cardText}>
+                            <Text variant="titleMedium" style={ContainerStyles.cardTitle2}>
                                 Esportivas, confira modalidades
                             </Text>
-                            <Text variant="titleSmall" style={ContainerStyles.cardText}>
+                        </Card.Content>
+                        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                        <Card.Content>
+                            <Text variant="titleSmall" style={ContainerStyles.cardSubTitle}>
                                 Postado por "Coordenação" em 05/05
                             </Text>
                         </Card.Content>
@@ -59,10 +67,13 @@ export default function News() {
                 <TouchableRipple onPress={() => navigation.navigate('Calendario')} borderless>
                     <Card style={ContainerStyles.cardNews}>
                         <Card.Content>
-                            <Text variant="titleMedium" style={ContainerStyles.cardText}>
-                                Esportivas, confira modalidades
+                            <Text variant="titleMedium" style={ContainerStyles.cardTitle2}>
+                                Vencedores do Leite
                             </Text>
-                            <Text variant="titleSmall" style={ContainerStyles.cardText}>
+                        </Card.Content>
+                        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                        <Card.Content>
+                            <Text variant="titleSmall" style={ContainerStyles.cardSubTitle}>
                                 Postado por "Coordenação" em 05/05
                             </Text>
                         </Card.Content>
@@ -71,24 +82,17 @@ export default function News() {
                 <TouchableRipple onPress={() => navigation.navigate('Calendario')} borderless>
                     <Card style={ContainerStyles.cardNews}>
                         <Card.Content>
-                            <Text variant="titleMedium" style={ContainerStyles.cardText}>
-                                Esportivas, confira modalidades
-                            </Text>
-                            <Text variant="titleSmall" style={ContainerStyles.cardText}>
-                                Postado por "Coordenação" em 05/05
-                            </Text>
-                        </Card.Content>
-                    </Card>
-                </TouchableRipple>
-                <TouchableRipple onPress={() => navigation.navigate('Calendario')} borderless>
-                    <Card style={ContainerStyles.cardNews}>
-                        <Card.Content>
-                            <Text variant="titleMedium" style={ContainerStyles.cardText}>
-                                Esportivas, confira modalidades
-                            </Text>
-                            <Text variant="titleSmall" style={ContainerStyles.cardText}>
-                                Postado por "Coordenação" em 05/05
-                            </Text>
+                            <Card.Content>
+                                <Text variant="titleMedium" style={ContainerStyles.cardTitle2}>
+                                    Vencedor da Última Gincana
+                                </Text>
+                            </Card.Content>
+                            <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                            <Card.Content>
+                                <Text variant="titleSmall" style={ContainerStyles.cardSubTitle}>
+                                    Postado por "Coordenação" em 05/05
+                                </Text>
+                            </Card.Content>
                         </Card.Content>
                     </Card>
                 </TouchableRipple>
