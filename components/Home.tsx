@@ -1,10 +1,11 @@
 import { View, ScrollView } from "react-native";
 import { Text, useTheme, Card, Button, TouchableRipple } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
-import { ContainerStyles } from '../utils/styles';
+import { ContainerStyles, ThemeType } from '../utils/styles';
+import Calendario from './Calendario';
 
 export default function Home() {
-    const theme = useTheme();
+    const theme = useTheme<ThemeType>();
     const navigation = useNavigation();
 
     return (
@@ -13,7 +14,7 @@ export default function Home() {
                 {/* Card de notícia */}
                 <Card>
                     <Card.Content>
-                        <Text variant="titleLarge" style={ContainerStyles.cardText}>
+                        <Text variant="titleLarge" style={ContainerStyles.cardTitle}>
                             Última Notícia
                         </Text>
                         <Text variant="bodyMedium" style={ContainerStyles.cardText}>

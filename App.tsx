@@ -5,13 +5,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Home from './components/Home';
 import User from './components/User';
+import News from './components/News'
 import { BottomTabParams } from './utils/types';
-import { MainTheme } from './utils/styles';
+import { MainTheme, ThemeType } from './utils/styles';
 
 const Stack = createBottomTabNavigator<BottomTabParams, 'Nav'>()
 
 function RootStack() {
-  const theme = useTheme()
+  const theme = useTheme<ThemeType>()
   return (
     <Stack.Navigator
       id='Nav'
@@ -60,7 +61,7 @@ function RootStack() {
       />
       <Stack.Screen
         name='Notícias'
-        component={User}
+        component={News}
         options={{
           title: 'Notícias',
           tabBarIcon: ({ color, size }) => (
