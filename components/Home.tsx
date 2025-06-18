@@ -3,10 +3,10 @@ import { Text, useTheme, Card, Button, TouchableRipple } from "react-native-pape
 import { useNavigation } from '@react-navigation/native';
 import { ContainerStyles, ThemeType } from '../utils/styles';
 import Calendario from './Calendario';
+import { HomeNavProps } from "../utils/types";
 
-export default function Home() {
+export default function Home({ navigation }: HomeNavProps) {
     const theme = useTheme<ThemeType>();
-    const navigation = useNavigation();
 
     return (
         <ScrollView>

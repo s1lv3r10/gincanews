@@ -8,3 +8,6 @@ export type BottomTabParams = {
 }
 
 export type UserNavProps = BottomTabScreenProps<BottomTabParams, 'User', 'nav'>
+export type HomeNavProps = BottomTabScreenProps<BottomTabParams, 'Gincanews', 'nav'>
+export type CalendarioNavProps = BottomTabScreenProps<BottomTabParams, 'Calendario', 'nav'>
+export type NoticiasNavProps = BottomTabScreenProps<BottomTabParams, 'Notícias', 'nav'>
