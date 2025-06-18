@@ -1,17 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import { PaperProvider, useTheme } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Home from './components/Home';
 import User from './components/User';
+import News from './components/News'
 import { BottomTabParams } from './utils/types';
-import { MainTheme } from './utils/styles';
+import { ContainerStyles, MainTheme, ThemeType } from './utils/styles';
+import Calendario from './components/Calendario';
 
 const Stack = createBottomTabNavigator<BottomTabParams, 'Nav'>()
 
 function RootStack() {
-  const theme = useTheme()
+  const theme = useTheme<ThemeType>()
   return (
     <Stack.Navigator
       id='Nav'
@@ -46,11 +48,15 @@ function RootStack() {
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
+          headerTitle:()=><Image 
+            source={require('./img/Logo.jpg')}
+            style={ContainerStyles.logoHome}
+          />
         }}
       />
       <Stack.Screen
         name='Calendario'
-        component={User}
+        component={Calendario}
         options={{
           title: 'Calendário',
           tabBarIcon: ({ color, size }) => (
@@ -60,7 +66,7 @@ function RootStack() {
       />
       <Stack.Screen
         name='Notícias'
-        component={User}
+        component={News}
         options={{
           title: 'Notícias',
           tabBarIcon: ({ color, size }) => (
