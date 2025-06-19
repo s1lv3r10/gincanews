@@ -6,7 +6,7 @@ export const MainTheme = {
     colors: {
         ...BaseTheme.colors,
         // cores cps etc
-        vermelhoPrincipal: '#911919',
+        vermelhoPrincipal: '#B20000',
         cinzaPrincipal: '#383636',
     }
 }
@@ -21,7 +21,7 @@ export const ContainerStyles = StyleSheet.create({
         padding: 30,
         gap: 20,
     },
-    logoHome:{
+    logoHome: {
         height: 50,
         width: 50
     },
@@ -34,15 +34,28 @@ export const ContainerStyles = StyleSheet.create({
         justifyContent: 'space-between',
         marginTop: 10
     },
-
+    redDot: {
+        borderRadius: 360,
+        width: 20,
+        backgroundColor: '#B20000',
+        marginLeft: 5,
+        marginRight: 5,
+    },
+    grayDot: {
+        borderRadius: 360,
+        width: 20,
+        backgroundColor: '#666666',
+        marginLeft: 5,
+        marginRight: 7
+    },
     homeButton: { //Botão de todos os eventos da Home
-        backgroundColor: '#911919',
+        backgroundColor: '#B20000',
         margin: 10,
         padding: 5,
         borderRadius: 100
     },
     horizontalRule: { //Linha horizontal
-        borderBottomColor: '#911919',
+        borderBottomColor: '#7E0000',
         borderBottomWidth: StyleSheet.hairlineWidth,
         marginVertical: 10,
     },
@@ -85,6 +98,64 @@ export const ContainerStyles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
-        margin: 5
+        margin: 2
     },
+    eventoContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    dataContainer: {
+        width: 60,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    diaGlobal: {
+        color: '#B20000',
+        fontSize: 28,
+        fontWeight: 'bold',
+    },
+    mesGlobal: {
+        color: '#B20000',
+        fontSize: 14,
+        marginTop: -4,
+    },
+    diaEM: {
+        color: '#666666',
+        fontSize: 28,
+        fontWeight: 'bold',
+    },
+    mesEM: {
+        color: '#666666',
+        fontSize: 14,
+        marginTop: -4,
+    },
+    textoContainer: {
+        flex: 1,
+    },
+    titulo: {
+        fontSize: 20,
+        color: '#383636',
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    foto: {
+        width: 200,
+        height: 200,
+        borderRadius: 360,
+        borderWidth: 2,
+        borderColor: '#B20000',
+    },
+    edit: {
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        backgroundColor: '#B20000',
+        borderRadius: 20,
+    },
+    input: {
+        backgroundColor: '#fff',
+        marginVertical: 8,
+        margin: 15,
+        marginTop:2
+    }
 });

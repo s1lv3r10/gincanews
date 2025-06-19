@@ -6,76 +6,80 @@ import { NoticiasNavProps } from "../utils/types";
 
 export default function News({ navigation }: NoticiasNavProps) {
     const theme = useTheme<ThemeType>();
-
     return (
         <ScrollView>
             {/* Últimos Eventos */}
             <View style={{ flex: 1, padding: 16 }}>
-                <Text style={ContainerStyles.Title}>Todos os Eventos</Text>
+                <Text style={ContainerStyles.Title}>Últimos os Eventos</Text>
                 <Text style={ContainerStyles.subTitle}>
                     Confira um sumário dos últimos acontecimentos
                 </Text>
-
                 {/** Cards clicáveis */}
                 <TouchableRipple onPress={() => navigation.navigate('Calendario')} borderless>
                     <Card style={ContainerStyles.cardNews}>
                         <Card.Content>
-                            <Text variant="titleMedium" style={ContainerStyles.cardTitle2}>
-                                Como abrir recursos?
-                            </Text>
-                        </Card.Content>
-                        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-                        <Card.Content>
-                            <Text variant="titleSmall" style={ContainerStyles.cardSubTitle}>
-                                Postado por "Coordenação" em 05/05
-                            </Text>
+                            <Card.Content>
+                                <Text variant="titleMedium" style={ContainerStyles.cardTitle2}>
+                                    Como abrir recursos?
+                                </Text>
+                            </Card.Content>
+                            <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                            <Card.Content>
+                                <Text variant="titleSmall" style={ContainerStyles.cardSubTitle}>
+                                    Postado por "Coordenação" em 05/05
+                                </Text>
+                            </Card.Content>
                         </Card.Content>
                     </Card>
-                </TouchableRipple>
-
+                </TouchableRipple>               
                 <TouchableRipple onPress={() => navigation.navigate('Calendario')} borderless>
                     <Card style={ContainerStyles.cardNews}>
                         <Card.Content>
-                            <Text variant="titleMedium" style={ContainerStyles.cardTitle2}>
-                                Vencedores do Cosplay
-                            </Text>
-                        </Card.Content>
-                        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-                        <Card.Content>
-                            <Text variant="titleSmall" style={ContainerStyles.cardSubTitle}>
-                                Postado por "Coordenação" em 05/05
-                            </Text>
-                        </Card.Content>
-                    </Card>
-                </TouchableRipple>
-
-                <TouchableRipple onPress={() => navigation.navigate('Calendario')} borderless>
-                    <Card style={ContainerStyles.cardNews}>
-                        <Card.Content>
-                            <Text variant="titleMedium" style={ContainerStyles.cardTitle2}>
-                                Esportivas, confira modalidades
-                            </Text>
-                        </Card.Content>
-                        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-                        <Card.Content>
-                            <Text variant="titleSmall" style={ContainerStyles.cardSubTitle}>
-                                Postado por "Coordenação" em 05/05
-                            </Text>
+                            <Card.Content>
+                                <Text variant="titleMedium" style={ContainerStyles.cardTitle2}>
+                                    Esportivas, confira datas e modalidades
+                                </Text>
+                            </Card.Content>
+                            <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                            <Card.Content>
+                                <Text variant="titleSmall" style={ContainerStyles.cardSubTitle}>
+                                    Postado por "Coordenação" em 05/05
+                                </Text>
+                            </Card.Content>
                         </Card.Content>
                     </Card>
                 </TouchableRipple>
                 <TouchableRipple onPress={() => navigation.navigate('Calendario')} borderless>
                     <Card style={ContainerStyles.cardNews}>
                         <Card.Content>
-                            <Text variant="titleMedium" style={ContainerStyles.cardTitle2}>
-                                Vencedores do Leite
-                            </Text>
+                            <Card.Content>
+                                <Text variant="titleMedium" style={ContainerStyles.cardTitle2}>
+                                    Arrecadação de leite, confira resultados
+                                </Text>
+                            </Card.Content>
+                            <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                            <Card.Content>
+                                <Text variant="titleSmall" style={ContainerStyles.cardSubTitle}>
+                                    Postado por "Coordenação" em 05/05
+                                </Text>
+                            </Card.Content>
                         </Card.Content>
-                        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                    </Card>
+                </TouchableRipple>
+                <TouchableRipple onPress={() => navigation.navigate('Calendario')} borderless>
+                    <Card style={ContainerStyles.cardNews}>
                         <Card.Content>
-                            <Text variant="titleSmall" style={ContainerStyles.cardSubTitle}>
-                                Postado por "Coordenação" em 05/05
-                            </Text>
+                            <Card.Content>
+                                <Text variant="titleMedium" style={ContainerStyles.cardTitle2}>
+                                    Pagamento das Inscrições
+                                </Text>
+                            </Card.Content>
+                            <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                            <Card.Content>
+                                <Text variant="titleSmall" style={ContainerStyles.cardSubTitle}>
+                                    Postado por "Coordenação" em 05/05
+                                </Text>
+                            </Card.Content>
                         </Card.Content>
                     </Card>
                 </TouchableRipple>
