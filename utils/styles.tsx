@@ -56,7 +56,7 @@ export const ContainerStyles = StyleSheet.create({
     },
     horizontalRule: { //Linha horizontal
         borderBottomColor: '#7E0000',
-        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomWidth: 2,
         marginVertical: 10,
     },
     Title: { //Título padrão
@@ -68,7 +68,8 @@ export const ContainerStyles = StyleSheet.create({
     subTitle: { //Subtítulo padrão
         color: 'rgb(146, 146, 146)',
         fontSize: 16,
-        textAlign: 'center'
+        textAlign: 'center',
+        marginBottom: 4
     },
     cardNews: { //Cards de últimos eventos que fica no final da home
         margin: 5,
@@ -100,7 +101,7 @@ export const ContainerStyles = StyleSheet.create({
         textAlign: 'center',
         margin: 2
     },
-    eventoContainer: {
+    eventoContainer: { 
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -157,5 +158,12 @@ export const ContainerStyles = StyleSheet.create({
         marginVertical: 8,
         margin: 15,
         marginTop:2
-    }
+    },
+    imagemCard: {
+    height: 200,
+    resizeMode: 'cover',
+    borderRadius: 10,
+    marginVertical: 10,
+},
+
 });
