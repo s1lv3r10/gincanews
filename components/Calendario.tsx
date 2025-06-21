@@ -97,7 +97,6 @@ export default function Calendario({ navigation }: CalendarioNavProps) {
                     mes="Jun"
                     titulo="Entrega do Leite"
                 />
-
             </View>
         </ScrollView>
 
