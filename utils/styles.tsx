@@ -1,5 +1,6 @@
 import { MD3LightTheme as BaseTheme } from "react-native-paper";
 import { StyleSheet } from "react-native";
+import { Background } from "@react-navigation/elements";
 
 export const MainTheme = {
     ...BaseTheme,
@@ -14,12 +15,16 @@ export const MainTheme = {
 export type ThemeType = typeof MainTheme;
 
 export const ContainerStyles = StyleSheet.create({
+
     default: {
         flex: 1,
         justifyContent: "center",
         alignItems: 'center',
         padding: 30,
         gap: 20,
+    },
+        Bg: {
+        opacity: 0.6,
     },
     logoHome: {
         height: 50,
@@ -63,7 +68,7 @@ export const ContainerStyles = StyleSheet.create({
         color: '000',
         fontSize: 27,
         fontWeight: 'bold',
-        textAlign: 'center'
+        textAlign: 'center',
     },
     subTitle: { //Subtítulo padrão
         color: 'rgb(146, 146, 146)',
@@ -101,7 +106,7 @@ export const ContainerStyles = StyleSheet.create({
         textAlign: 'center',
         margin: 2
     },
-    eventoContainer: { 
+    eventoContainer: {
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -157,13 +162,13 @@ export const ContainerStyles = StyleSheet.create({
         backgroundColor: '#fff',
         marginVertical: 8,
         margin: 15,
-        marginTop:2
+        marginTop: 2
     },
     imagemCard: {
-    height: 200,
-    resizeMode: 'cover',
-    borderRadius: 10,
-    marginVertical: 10,
-},
+        height: 200,
+        resizeMode: 'cover',
+        borderRadius: 10,
+        marginVertical: 10,
+    },
 
 });
