@@ -5,7 +5,7 @@ import { HomeNavProps } from "../utils/types";
 
 export default function Home({ navigation }: HomeNavProps) {
     const theme = useTheme<ThemeType>();
-    const back=require('../img/background.png')
+    const back = require('../img/fundo.png')
 
     return (
         <View style={{ flex: 1 }}>
@@ -13,10 +13,9 @@ export default function Home({ navigation }: HomeNavProps) {
                 source={back}
                 resizeMode="cover"
             >
-
                 <ScrollView contentContainerStyle={{ padding: 16, zIndex: 1 }}>
                     {/* Card de notícia */}
-                    <Card>
+                    <Card style={ContainerStyles.cardNews}>
                         <Card.Content>
                             <Text variant="titleLarge" style={ContainerStyles.cardTitle}>
                                 Última Notícia
@@ -89,12 +88,13 @@ export default function Home({ navigation }: HomeNavProps) {
                     <View style={ContainerStyles.horizontalRule} />
 
                     {/* Últimos Eventos */}
-                    <View style={{ flex: 1, padding: 16, backgroundColor: '#fff'}}>
-                        <Text style={ContainerStyles.Title}>Últimos Eventos</Text>
-                        <Text style={ContainerStyles.subTitle}>
-                            Confira um sumário dos últimos acontecimentos
-                        </Text>
-
+                    <View style={{ flex: 1, padding: 10 }}>
+                        <View style={ContainerStyles.Topo}>
+                            <Text style={ContainerStyles.Title}>Últimos Eventos</Text>
+                            <Text style={ContainerStyles.subTitle}>
+                                Confira um sumário dos últimos acontecimentos
+                            </Text>
+                        </View>
                         <TouchableRipple onPress={() => navigation.navigate('Calendario')} borderless>
                             <Card style={ContainerStyles.cardNews}>
                                 <Card.Content>
