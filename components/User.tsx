@@ -3,6 +3,7 @@ import { View, ScrollView, Image, ImageBackground } from "react-native";
 import { Text, useTheme, Button, TextInput, Card, Modal, Portal, TouchableRipple, IconButton } from "react-native-paper";
 import { ContainerStyles, ThemeType } from '../utils/styles';
 import { UserNavProps } from "../utils/types";
+import Start from "./Start"
 
 export default function User({ navigation }: UserNavProps) {
     const theme = useTheme<ThemeType>();
@@ -67,6 +68,7 @@ export default function User({ navigation }: UserNavProps) {
                                 style={ContainerStyles.homeButton}
                                 textColor="#fff"
                                 labelStyle={{ fontSize: 16 }}
+                                onPress={() => navigation.navigate("Start")}
                             >
                                 Logout
                             </Button>
@@ -101,7 +103,6 @@ export default function User({ navigation }: UserNavProps) {
                                         style={ContainerStyles.input}
                                         outlineColor="#B20000"
                                         activeOutlineColor="#B20000"
-                                        theme={{ roundness: 50 }}
                                     />
                                 </View>
                                 <View>
@@ -112,7 +113,6 @@ export default function User({ navigation }: UserNavProps) {
                                         style={ContainerStyles.input}
                                         outlineColor="#B20000"
                                         activeOutlineColor="#B20000"
-                                        theme={{ roundness: 50 }}
                                     />
                                 </View>
                                 <View>
@@ -123,7 +123,6 @@ export default function User({ navigation }: UserNavProps) {
                                         style={ContainerStyles.input}
                                         outlineColor="#B20000"
                                         activeOutlineColor="#B20000"
-                                        theme={{ roundness: 50 }}
                                     />
                                 </View>
                                 <View>
@@ -134,7 +133,6 @@ export default function User({ navigation }: UserNavProps) {
                                         style={ContainerStyles.input}
                                         outlineColor="#B20000"
                                         activeOutlineColor="#B20000"
-                                        theme={{ roundness: 50 }}
                                     />
                                 </View>
                                 <Button
