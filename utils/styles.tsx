@@ -30,6 +30,19 @@ export const ContainerStyles = StyleSheet.create({
         height: 50,
         width: 50
     },
+    logo:{
+        height: 65,
+        width: 65,
+        marginLeft: '20%',
+        flexDirection: 'row',
+        marginTop: 3,
+        marginRight: 5
+    },
+    textLogo:{
+        fontSize: 30,
+        marginTop: '5%',
+        fontWeight: 'bold', 
+    },
     cardEvento: { //Cards de datas
         width: 180,
         margin: 3,
@@ -190,6 +203,18 @@ export const ContainerStyles = StyleSheet.create({
         backgroundColor: "white",
         padding: 20,
         margin: 20,
-        borderRadius: 10
+        borderRadius: 10,
+    },
+    CardLogin: {
+        margin: 5,
+        backgroundColor: '#B20000',
+        marginTop: '50%',
+        padding: 5
+    },
+    NovaConta: { 
+        flexDirection: "row", 
+        alignItems: "center", 
+        marginTop: 4, 
+        marginLeft:'20%' 
     },
 });
