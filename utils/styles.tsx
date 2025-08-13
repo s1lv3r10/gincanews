@@ -1,5 +1,6 @@
 import { MD3LightTheme as BaseTheme } from "react-native-paper";
 import { StyleSheet } from "react-native";
+import { Background } from "@react-navigation/elements";
 
 export const MainTheme = {
     ...BaseTheme,
@@ -14,12 +15,16 @@ export const MainTheme = {
 export type ThemeType = typeof MainTheme;
 
 export const ContainerStyles = StyleSheet.create({
+
     default: {
         flex: 1,
         justifyContent: "center",
         alignItems: 'center',
         padding: 30,
         gap: 20,
+    },
+    Bg: {
+        opacity: 0.6,
     },
     logoHome: {
         height: 50,
@@ -28,6 +33,7 @@ export const ContainerStyles = StyleSheet.create({
     cardEvento: { //Cards de datas
         width: 180,
         margin: 3,
+        backgroundColor: '#fff'
     },
     row: { //separa os cards de data abaixo do de notícia
         flexDirection: 'row',
@@ -63,7 +69,7 @@ export const ContainerStyles = StyleSheet.create({
         color: '000',
         fontSize: 27,
         fontWeight: 'bold',
-        textAlign: 'center'
+        textAlign: 'center',
     },
     subTitle: { //Subtítulo padrão
         color: 'rgb(146, 146, 146)',
@@ -73,6 +79,7 @@ export const ContainerStyles = StyleSheet.create({
     },
     cardNews: { //Cards de últimos eventos que fica no final da home
         margin: 5,
+        backgroundColor: '#fff'
     },
     cardText: { //Texto padrão do card
         textAlign: 'center'
@@ -98,17 +105,20 @@ export const ContainerStyles = StyleSheet.create({
         color: '000',
         fontSize: 18,
         fontWeight: 'bold',
-        textAlign: 'center',
-        margin: 2
+        textAlign: 'left',
+        margin: 2,
+        marginLeft: 15
     },
-    eventoContainer: { 
+    eventoContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+        backgroundColor: '#fff'
     },
     dataContainer: {
         width: 60,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#fff'
     },
     diaGlobal: {
         color: '#B20000',
@@ -157,13 +167,30 @@ export const ContainerStyles = StyleSheet.create({
         backgroundColor: '#fff',
         marginVertical: 8,
         margin: 15,
-        marginTop:2
+        marginTop: 2,
+        borderRadius: 360
     },
     imagemCard: {
-    height: 200,
-    resizeMode: 'cover',
-    borderRadius: 10,
-    marginVertical: 10,
-},
-
+        height: 200,
+        resizeMode: 'cover',
+        borderRadius: 10,
+        marginVertical: 10,
+    },
+    Topo: {
+        backgroundColor: '#fff',
+        padding: 5,
+        marginBottom: 5,
+        borderRadius: 10
+    },
+    background: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+    },
+    Modal: {
+        backgroundColor: "white",
+        padding: 20,
+        margin: 20,
+        borderRadius: 10
+    },
 });
