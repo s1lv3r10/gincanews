@@ -5,6 +5,7 @@ export type BottomTabParams = {
     Calendario: undefined,
     Notícias: undefined,
     User: undefined,
+    Start: undefined,
 }
 
 export type UserNavProps = BottomTabScreenProps<BottomTabParams, 'User', 'nav'>

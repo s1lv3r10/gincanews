@@ -11,6 +11,7 @@ import Calendario from './components/Calendario';
 
 import { BottomTabParams } from './utils/types';
 import { ContainerStyles, MainTheme, ThemeType } from './utils/styles';
+import Start from './components/Start';
 
 const Stack = createBottomTabNavigator<BottomTabParams, 'Nav'>();
 
@@ -98,6 +99,13 @@ function RootStack() {
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color={color} size={size} />
           ),
+        }}
+      />
+      <Stack.Screen 
+        name='Start'
+        component={Start}
+        options={{
+          tabBarButton: () => null,
         }}
       />
     </Stack.Navigator>
