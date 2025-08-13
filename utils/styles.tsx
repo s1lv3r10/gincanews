@@ -168,7 +168,6 @@ export const ContainerStyles = StyleSheet.create({
         marginVertical: 8,
         margin: 15,
         marginTop: 2,
-        borderRadius: 360
     },
     imagemCard: {
         height: 200,

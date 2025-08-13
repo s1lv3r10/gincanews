@@ -101,7 +101,6 @@ export default function User({ navigation }: UserNavProps) {
                                         style={ContainerStyles.input}
                                         outlineColor="#B20000"
                                         activeOutlineColor="#B20000"
-                                        theme={{ roundness: 50 }}
                                     />
                                 </View>
                                 <View>
@@ -112,7 +111,6 @@ export default function User({ navigation }: UserNavProps) {
                                         style={ContainerStyles.input}
                                         outlineColor="#B20000"
                                         activeOutlineColor="#B20000"
-                                        theme={{ roundness: 50 }}
                                     />
                                 </View>
                                 <View>
@@ -123,7 +121,6 @@ export default function User({ navigation }: UserNavProps) {
                                         style={ContainerStyles.input}
                                         outlineColor="#B20000"
                                         activeOutlineColor="#B20000"
-                                        theme={{ roundness: 50 }}
                                     />
                                 </View>
                                 <View>
@@ -134,7 +131,6 @@ export default function User({ navigation }: UserNavProps) {
                                         style={ContainerStyles.input}
                                         outlineColor="#B20000"
                                         activeOutlineColor="#B20000"
-                                        theme={{ roundness: 50 }}
                                     />
                                 </View>
                                 <Button
