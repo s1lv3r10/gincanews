@@ -1,13 +1,18 @@
 import { View, ScrollView, ImageBackground, Image } from "react-native";
-import { Text, useTheme, Card, Button, TouchableRipple, TextInput } from "react-native-paper";
+import { Text, useTheme, Card, Button, TextInput, IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 import { ContainerStyles, ThemeType } from "../utils/styles";
 import { HomeNavProps } from "../utils/types";
 
-export default function Start({ navigation }) {
+export default function Start({ navigation }: HomeNavProps) {
   const theme = useTheme<ThemeType>();
   const back = require("../img/fundo.png");
   const logo = require("../img/logo.png");
+
+  // state para controlar visibilidade da senha
+  const [senhaVisivel, setSenhaVisivel] = useState(false);
+
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground
@@ -18,13 +23,13 @@ export default function Start({ navigation }) {
         <ScrollView>
           <View style={{ flex: 1, padding: 16 }}>
             <Card style={ContainerStyles.CardLogin}>
-              <Card.Content style={{backgroundColor: '#fff', borderRadius: 10}}>
-                <View style={{ flexDirection: 'row' }}>
-                  <Image
-                    source={logo}
-                    style={ContainerStyles.logo} />
+              <Card.Content style={{ backgroundColor: "#fff", borderRadius: 10 }}>
+                <View style={{ flexDirection: "row" }}>
+                  <Image source={logo} style={ContainerStyles.logo} />
                   <Text style={ContainerStyles.textLogo}>Gincanews</Text>
                 </View>
+
+                {/* Usuário */}
                 <View>
                   <Text style={ContainerStyles.cardTitle2}>Nome de Usuário</Text>
                   <TextInput
@@ -35,6 +40,8 @@ export default function Start({ navigation }) {
                     activeOutlineColor="#B20000"
                   />
                 </View>
+
+                {/* Senha */}
                 <View>
                   <Text style={ContainerStyles.cardTitle2}>Senha</Text>
                   <TextInput
@@ -43,27 +50,38 @@ export default function Start({ navigation }) {
                     style={ContainerStyles.input}
                     outlineColor="#B20000"
                     activeOutlineColor="#B20000"
+                    secureTextEntry={!senhaVisivel} // alterna visibilidade
+                    right={
+                      <TextInput.Icon
+                        icon={senhaVisivel ? "eye-off" : "eye"}
+                        onPress={() => setSenhaVisivel(!senhaVisivel)}
+                      />
+                    }
                   />
                 </View>
+
+                {/* Botão entrar */}
                 <Button
                   mode="contained"
                   style={ContainerStyles.mainButton}
-                  labelStyle={{ fontSize: 16, color: '#fff' }}
-                  onPress={() => navigation.navigate('Gincanews')}>
+                  labelStyle={{ fontSize: 16, color: "#fff" }}
+                  onPress={() => navigation.navigate("Gincanews")}
+                >
                   Entrar
                 </Button>
+
+                {/* Criar conta */}
                 <View style={ContainerStyles.NovaConta}>
                   <Text style={{ fontSize: 15 }}>Não tem conta?</Text>
                   <Button
                     mode="text"
                     compact
                     onPress={() => console.log("Criar conta")}
-                    labelStyle={{ fontSize: 15, color: '#B20000' }}
+                    labelStyle={{ fontSize: 15, color: "#B20000" }}
                   >
                     Cadastre-se
                   </Button>
                 </View>
-
               </Card.Content>
             </Card>
           </View>
