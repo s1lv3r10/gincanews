@@ -75,7 +75,7 @@ function RootStack() {
         name="Calendario"
         component={Calendario}
         options={{
-          title: 'Calendário',
+          title: 'Cronograma',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="calendar" color={color} size={size} />
           ),
@@ -95,9 +95,9 @@ function RootStack() {
         name="User"
         component={User}
         options={{
-          title: 'Conta',
+          title: 'Info',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
+            <MaterialCommunityIcons name="information-outline" color={color} size={size} />
           ),
         }}
       />

@@ -77,7 +77,7 @@ export default function Home({ navigation }: HomeNavProps) {
 
                     <Button
                         mode="contained"
-                        style={ContainerStyles.homeButton}
+                        style={ContainerStyles.mainButton}
                         textColor="#fff"
                         labelStyle={{ fontSize: 16 }}
                         onPress={() => navigation.navigate('Calendario')}
@@ -87,10 +87,10 @@ export default function Home({ navigation }: HomeNavProps) {
 
                     <View style={ContainerStyles.horizontalRule} />
 
-                    {/* Últimos Eventos */}
+                    {/* Últimos Notícias */}
                     <View style={{ flex: 1, padding: 10 }}>
                         <View style={ContainerStyles.Topo}>
-                            <Text style={ContainerStyles.Title}>Últimos Eventos</Text>
+                            <Text style={ContainerStyles.cardTitle}>Últimas Notícias</Text>
                             <Text style={ContainerStyles.subTitle}>
                                 Confira um sumário dos últimos acontecimentos
                             </Text>

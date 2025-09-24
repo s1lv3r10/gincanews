@@ -47,7 +47,7 @@ export default function Start({ navigation }) {
                 </View>
                 <Button
                   mode="contained"
-                  style={ContainerStyles.homeButton}
+                  style={ContainerStyles.mainButton}
                   labelStyle={{ fontSize: 16, color: '#fff' }}
                   onPress={() => navigation.navigate('Gincanews')}>
                   Entrar

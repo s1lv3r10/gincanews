@@ -3,7 +3,7 @@ import { View, ScrollView, Image, ImageBackground } from "react-native";
 import { Text, useTheme, Button, TextInput, Card, Modal, Portal, TouchableRipple, IconButton } from "react-native-paper";
 import { ContainerStyles, ThemeType } from '../utils/styles';
 import { UserNavProps } from "../utils/types";
-import Start from "./Start"
+//import Start from "./Start"
 
 export default function User({ navigation }: UserNavProps) {
     const theme = useTheme<ThemeType>();
@@ -29,34 +29,11 @@ export default function User({ navigation }: UserNavProps) {
                                 Visualize a configuração atual da sua conta
                             </Text>
                         </View>
-
-                        {/* Foto de perfil */}
-                        <View style={{ alignItems: 'center', marginVertical: 20 }}>
-                            <View>
-                                <Image
-                                    source={require('../img/semImagem.png')}
-                                    style={ContainerStyles.foto}
-                                />
-                                <TouchableRipple
-                                    onPress={() => console.log('Editar Foto')}
-                                    style={ContainerStyles.edit}
-                                    borderless
-                                >
-                                    <IconButton
-                                        icon="pencil"
-                                        iconColor="#fff"
-                                        size={18}
-                                        style={{ backgroundColor: '#B20000' }}
-                                    />
-                                </TouchableRipple>
-                            </View>
-                        </View>
-
                         {/* Botão abre modal */}
                         <View>
                             <Button
                                 mode="contained"
-                                style={ContainerStyles.homeButton}
+                                style={ContainerStyles.mainButton}
                                 textColor="#fff"
                                 labelStyle={{ fontSize: 16 }}
                                 onPress={openModal}
@@ -65,7 +42,7 @@ export default function User({ navigation }: UserNavProps) {
                             </Button>
                             <Button
                                 mode="contained"
-                                style={ContainerStyles.homeButton}
+                                style={ContainerStyles.mainButton}
                                 textColor="#fff"
                                 labelStyle={{ fontSize: 16 }}
                                 onPress={() => navigation.navigate("Start")}
@@ -83,9 +60,51 @@ export default function User({ navigation }: UserNavProps) {
                                 https://etecfernandoprestes.cps.sp.gov.br/
                             </Text>
                         </View>
+                        <View style={ContainerStyles.horizontalRule}/>
+                        <View style={ContainerStyles.Topo}>
+                            <Text style={ContainerStyles.Title}>Ajuda</Text>
+                            <Text style={ContainerStyles.subTitle}>
+                                Confira aqui como utilizar o o aplicativo
+                            </Text>
+                            <Text style={ContainerStyles.txt}>
+                                Como usuário comum, você pode visualizar os eventos programados na aba cronograma, e definir se quer receber notificações sobre o evento ao clicar sobre a data. 
+                            </Text>
+                            <Text style={ContainerStyles.txt}>Você também poderá conferir notícias sobre os útlimos eventos da escola, podendo ver detalhes acerca delas ao clicar sobre a imagem da notícia</Text>
+                            <Text style={ContainerStyles.Title}>F.A.Q</Text>
+                            <Text style={ContainerStyles.txt}>
+                                "Posso adicionar notícias e datas de evento no calendário?" 
+                            </Text>
+                            <Text style={ContainerStyles.subTitle}>
+                                Para usuários comuns, essa feature não está disponível.
+                            </Text>
+                            <Text style={ContainerStyles.txt}>
+                                "Como diferenciar as datas de eventos para todos e para o meu EM?" 
+                            </Text>
+                            <Text style={ContainerStyles.subTitle}>
+                                Você pode diferenciá-los através das cores da data, vermelho para o Cronograma Global e cinza para o Cronograma do EM
+                            </Text>
+                        </View>
+                        <View style={ContainerStyles.horizontalRule}/>
+                        <View style={ContainerStyles.Topo}>
+                            <Text style={ContainerStyles.Title}>Ajuda</Text>
+                            <Text style={ContainerStyles.subTitle}>
+                                Confira aqui como utilizar o o aplicativo
+                            </Text>
+                            <Text style={ContainerStyles.txt}>
+                                Como usuário administrador, você pode adicionar, editar, atualizar e excluir eventos na aba cronograma. Para adicionar, você deve clicar no ícone "+" no topo da página e preencher o forumulário que abre na tela. Para editar ou excluir, deve-se tocar nos ícones correspondentes, de lápis e lata de lixo no evento específico.
+                            </Text>
+                            <Text style={ContainerStyles.txt}>O processo para as notícias é o mesmo, com os mesmos ícones.</Text>
+                            <Text style={ContainerStyles.txt}>Assim que fizer seu primeiro acesso, deve trocar a senha e o email que estavam sendo utilizados pelo usuário anterior, para poder receber informações necessárias.</Text>
+                            <Text style={ContainerStyles.Title}>F.A.Q</Text>
+                            <Text style={ContainerStyles.txt}>
+                                "Posso editar artigos colocados por outros usuários?" 
+                            </Text>
+                            <Text style={ContainerStyles.subTitle}>
+                                Sim, é possível editar artigos colocados por outros usuários.
+                            </Text>
+                        </View>
                     </View>
                 </ScrollView>
-
                 {/* Modal para editar conta */}
                 <Portal>
                     <Modal visible={visible} onDismiss={closeModal} contentContainerStyle={{
@@ -126,6 +145,16 @@ export default function User({ navigation }: UserNavProps) {
                                     />
                                 </View>
                                 <View>
+                                    <Text style={ContainerStyles.cardTitle2}>Senha</Text>
+                                    <TextInput
+                                        label="Confirmar Senha"
+                                        mode="outlined"
+                                        style={ContainerStyles.input}
+                                        outlineColor="#B20000"
+                                        activeOutlineColor="#B20000"
+                                    />
+                                </View>
+                                <View>
                                     <Text style={ContainerStyles.cardTitle2}>EM</Text>
                                     <TextInput
                                         label="EM"
@@ -137,7 +166,7 @@ export default function User({ navigation }: UserNavProps) {
                                 </View>
                                 <Button
                                     mode="contained"
-                                    style={ContainerStyles.homeButton}
+                                    style={ContainerStyles.mainButton}
                                     textColor="#fff"
                                     labelStyle={{ fontSize: 16 }} onPress={closeModal}>
                                     Salvar
