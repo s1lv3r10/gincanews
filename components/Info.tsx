@@ -2,10 +2,10 @@ import { useState } from "react";
 import { View, ScrollView, Image, ImageBackground } from "react-native";
 import { Text, useTheme, Button, TextInput, Card, Modal, Portal, TouchableRipple, IconButton } from "react-native-paper";
 import { ContainerStyles, ThemeType } from '../utils/styles';
-import { UserNavProps } from "../utils/types";
+import { InfoNavProps } from "../utils/types";
 //import Start from "./Start"
 
-export default function User({ navigation }: UserNavProps) {
+export default function Info({ navigation }: InfoNavProps) {
     const theme = useTheme<ThemeType>();
     const back = require('../img/fundo.png');
 
@@ -24,7 +24,7 @@ export default function User({ navigation }: UserNavProps) {
                 <ScrollView>
                     <View style={{ flex: 1, padding: 16}}>
                         <View style={ContainerStyles.Topo}>
-                            <Text style={ContainerStyles.Title}>Conta</Text>
+                            <Text style={[ContainerStyles.Title, {marginEnd:"20%"}]}>Conta</Text>
                             <Text style={ContainerStyles.subTitle}>
                                 Visualize a configuração atual da sua conta
                             </Text>
@@ -52,7 +52,7 @@ export default function User({ navigation }: UserNavProps) {
                         </View>
                         <View style={ContainerStyles.horizontalRule}/>
                         <View style={ContainerStyles.Topo}>
-                            <Text style={ContainerStyles.Title}>Sobre</Text>
+                            <Text style={[ContainerStyles.Title, {marginEnd:"20%"}]}>Sobre</Text>
                             <Text style={ContainerStyles.subTitle}>
                                 Confira mais informações sobre a Etec Fernando Prestes no site
                             </Text>
@@ -62,7 +62,7 @@ export default function User({ navigation }: UserNavProps) {
                         </View>
                         <View style={ContainerStyles.horizontalRule}/>
                         <View style={ContainerStyles.Topo}>
-                            <Text style={ContainerStyles.Title}>Ajuda</Text>
+                            <Text style={[ContainerStyles.Title, {marginEnd:"20%"}]}>Ajuda</Text>
                             <Text style={ContainerStyles.subTitle}>
                                 Confira aqui como utilizar o o aplicativo
                             </Text>
@@ -70,7 +70,7 @@ export default function User({ navigation }: UserNavProps) {
                                 Como usuário comum, você pode visualizar os eventos programados na aba cronograma, e definir se quer receber notificações sobre o evento ao clicar sobre a data. 
                             </Text>
                             <Text style={ContainerStyles.txt}>Você também poderá conferir notícias sobre os útlimos eventos da escola, podendo ver detalhes acerca delas ao clicar sobre a imagem da notícia</Text>
-                            <Text style={ContainerStyles.Title}>F.A.Q</Text>
+                            <Text style={[ContainerStyles.Title, {marginEnd:"20%"}]}>F.A.Q</Text>
                             <Text style={ContainerStyles.txt}>
                                 "Posso adicionar notícias e datas de evento no calendário?" 
                             </Text>
@@ -86,7 +86,7 @@ export default function User({ navigation }: UserNavProps) {
                         </View>
                         <View style={ContainerStyles.horizontalRule}/>
                         <View style={ContainerStyles.Topo}>
-                            <Text style={ContainerStyles.Title}>Ajuda</Text>
+                            <Text style={[ContainerStyles.Title, {marginEnd:"20%"}]}>Ajuda</Text>
                             <Text style={ContainerStyles.subTitle}>
                                 Confira aqui como utilizar o o aplicativo
                             </Text>
@@ -95,7 +95,7 @@ export default function User({ navigation }: UserNavProps) {
                             </Text>
                             <Text style={ContainerStyles.txt}>O processo para as notícias é o mesmo, com os mesmos ícones.</Text>
                             <Text style={ContainerStyles.txt}>Assim que fizer seu primeiro acesso, deve trocar a senha e o email que estavam sendo utilizados pelo usuário anterior, para poder receber informações necessárias.</Text>
-                            <Text style={ContainerStyles.Title}>F.A.Q</Text>
+                            <Text style={[ContainerStyles.Title, {marginEnd:"20%"}]}>F.A.Q</Text>
                             <Text style={ContainerStyles.txt}>
                                 "Posso editar artigos colocados por outros usuários?" 
                             </Text>

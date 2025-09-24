@@ -1,10 +1,10 @@
 import { View, ScrollView, ImageBackground } from "react-native";
-import { Text, useTheme, Card, Button, TouchableRipple } from "react-native-paper";
+import { Text, useTheme, Card, Button, TouchableRipple, IconButton } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
 import { ContainerStyles, ThemeType } from '../utils/styles';
-import { CalendarioNavProps } from "../utils/types";
+import { CronogramaNavProps } from "../utils/types";
 
-export default function Calendario({ navigation }: CalendarioNavProps) {
+export default function Cronograma({ navigation }: CronogramaNavProps) {
     const theme = useTheme<ThemeType>();
     const back = require('../img/fundo.png')
 
@@ -12,7 +12,7 @@ export default function Calendario({ navigation }: CalendarioNavProps) {
         return (
             <View style={{ flex: 1, padding: 5 }}>
                 <TouchableRipple onPress={() => navigation.navigate('Gincanews')}>
-                    <Card style={{backgroundColor:'#fff'}}>
+                    <Card style={{ backgroundColor: '#fff' }}>
                         <Card.Content>
                             <View style={ContainerStyles.eventoContainer}>
                                 {/* Data */}
@@ -21,8 +21,20 @@ export default function Calendario({ navigation }: CalendarioNavProps) {
                                     <Text style={ContainerStyles.mesGlobal}>{mes}</Text>
                                 </View>
                                 {/*Texto */}
-                                <View style={ContainerStyles.textoContainer}>
-                                    <Text style={ContainerStyles.titulo}>{titulo}</Text>
+                                <View style={[ContainerStyles.textoContainer, { flexDirection: "row", justifyContent: "space-between", alignItems: "center" }]}>
+                                    <Text style={[ContainerStyles.titulo, { flexDirection: "row", flex: 1, marginRight: 8 }]} numberOfLines={1}>{titulo}</Text>
+                                    <View style={{ flexDirection: "row" }}>
+                                        <IconButton
+                                            icon="pencil"
+                                            size={20}
+                                            onPress={() => console.log("Editar:", titulo)}
+                                        />
+                                        <IconButton
+                                            icon="delete"
+                                            size={20}
+                                            onPress={() => console.log("Excluir:", titulo)}
+                                        />
+                                    </View>
                                 </View>
                             </View>
                         </Card.Content>
@@ -33,9 +45,9 @@ export default function Calendario({ navigation }: CalendarioNavProps) {
     };
     const Evento2 = ({ dia, mes, titulo }: { dia: string, mes: string, titulo: string }) => {
         return (
-            <View style={{ flex: 1, padding: 5, backgroundColor: '#fff' }}>
-                <TouchableRipple onPress={() => navigation.navigate('Gincanews')} >
-                    <Card style={{backgroundColor:'#fff'}}>
+            <View style={{ flex: 1, padding: 5 }}>
+                <TouchableRipple onPress={() => navigation.navigate('Gincanews')}>
+                    <Card style={{ backgroundColor: '#fff' }}>
                         <Card.Content>
                             <View style={ContainerStyles.eventoContainer}>
                                 {/* Data */}
@@ -44,8 +56,20 @@ export default function Calendario({ navigation }: CalendarioNavProps) {
                                     <Text style={ContainerStyles.mesEM}>{mes}</Text>
                                 </View>
                                 {/*Texto */}
-                                <View style={ContainerStyles.textoContainer}>
-                                    <Text style={ContainerStyles.titulo}>{titulo}</Text>
+                                <View style={[ContainerStyles.textoContainer, { flexDirection: "row", justifyContent: "space-between", alignItems: "center" }]}>
+                                    <Text style={[ContainerStyles.titulo, { flexDirection: "row", flex: 1, marginRight: 8 }]} numberOfLines={1}>{titulo}</Text>
+                                    <View style={{ flexDirection: "row" }}>
+                                        <IconButton
+                                            icon="pencil"
+                                            size={20}
+                                            onPress={() => console.log("Editar:", titulo)}
+                                        />
+                                        <IconButton
+                                            icon="delete"
+                                            size={20}
+                                            onPress={() => console.log("Excluir:", titulo)}
+                                        />
+                                    </View>
                                 </View>
                             </View>
                         </Card.Content>
@@ -65,7 +89,14 @@ export default function Calendario({ navigation }: CalendarioNavProps) {
                     {/* Próximos Eventos */}
                     <View style={{ flex: 1, padding: 16 }}>
                         <View style={ContainerStyles.Topo}>
-                            <Text style={ContainerStyles.Title}>Todos os Eventos</Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={ContainerStyles.Title}>Todos os Eventos</Text>
+                                <IconButton
+                                    icon="plus-circle"
+                                    size={30}
+                                    onPress={() => console.log("Adicionar:")}
+                                />
+                            </View>
                             <Text style={ContainerStyles.subTitle}>
                                 Confira aqui seus próximos eventos
                             </Text>

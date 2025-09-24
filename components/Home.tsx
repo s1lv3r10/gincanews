@@ -42,7 +42,7 @@ export default function Home({ navigation }: HomeNavProps) {
 
                     {/* Próximos eventos */}
                     <View style={ContainerStyles.row}>
-                        <TouchableRipple onPress={() => navigation.navigate('Calendario')} borderless>
+                        <TouchableRipple onPress={() => navigation.navigate('Cronograma')} borderless>
                             <Card style={ContainerStyles.cardEvento}>
                                 <Card.Content>
                                     <Text variant="titleMedium" style={ContainerStyles.cardText}>
@@ -58,7 +58,7 @@ export default function Home({ navigation }: HomeNavProps) {
                             </Card>
                         </TouchableRipple>
 
-                        <TouchableRipple onPress={() => navigation.navigate('Calendario')} borderless rippleColor="rgba(0,0,0,0.1)">
+                        <TouchableRipple onPress={() => navigation.navigate('Cronograma')} borderless rippleColor="rgba(0,0,0,0.1)">
                             <Card style={ContainerStyles.cardEvento}>
                                 <Card.Content>
                                     <Text variant="titleMedium" style={ContainerStyles.cardText}>
@@ -80,7 +80,7 @@ export default function Home({ navigation }: HomeNavProps) {
                         style={ContainerStyles.mainButton}
                         textColor="#fff"
                         labelStyle={{ fontSize: 16 }}
-                        onPress={() => navigation.navigate('Calendario')}
+                        onPress={() => navigation.navigate('Cronograma')}
                     >
                         Confira Todos os Eventos
                     </Button>
@@ -95,7 +95,7 @@ export default function Home({ navigation }: HomeNavProps) {
                                 Confira um sumário dos últimos acontecimentos
                             </Text>
                         </View>
-                        <TouchableRipple onPress={() => navigation.navigate('Calendario')} borderless>
+                        <TouchableRipple onPress={() => navigation.navigate('Notícias')} borderless>
                             <Card style={ContainerStyles.cardNews}>
                                 <Card.Content>
                                     <Text variant="titleMedium" style={ContainerStyles.cardText}>
@@ -105,7 +105,7 @@ export default function Home({ navigation }: HomeNavProps) {
                             </Card>
                         </TouchableRipple>
 
-                        <TouchableRipple onPress={() => navigation.navigate('Calendario')} borderless>
+                        <TouchableRipple onPress={() => navigation.navigate('Notícias')} borderless>
                             <Card style={ContainerStyles.cardNews}>
                                 <Card.Content>
                                     <Text variant="titleMedium" style={ContainerStyles.cardText}>
@@ -115,7 +115,7 @@ export default function Home({ navigation }: HomeNavProps) {
                             </Card>
                         </TouchableRipple>
 
-                        <TouchableRipple onPress={() => navigation.navigate('Calendario')} borderless>
+                        <TouchableRipple onPress={() => navigation.navigate('Notícias')} borderless>
                             <Card style={ContainerStyles.cardNews}>
                                 <Card.Content>
                                     <Text variant="titleMedium" style={ContainerStyles.cardText}>

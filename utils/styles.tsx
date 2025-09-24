@@ -84,6 +84,9 @@ export const ContainerStyles = StyleSheet.create({
         fontSize: 27,
         fontWeight: "bold",
         textAlign: "center",
+        flexDirection: 'row',
+        marginLeft: '20%',
+        marginRight: 30
     },
     subTitle: {
         //Subtítulo padrão
