@@ -5,13 +5,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Home from './components/Home';
-import User from './components/User';
+import Info from './components/Info';
 import News from './components/News';
-import Calendario from './components/Calendario';
+import Cronograma from './components/Cronograma';
 
 import { BottomTabParams } from './utils/types';
 import { ContainerStyles, MainTheme, ThemeType } from './utils/styles';
 import Start from './components/Start';
+
 
 const Stack = createBottomTabNavigator<BottomTabParams, 'Nav'>();
 
@@ -72,10 +73,10 @@ function RootStack() {
         }}
       />
       <Stack.Screen
-        name="Calendario"
-        component={Calendario}
+        name="Cronograma"
+        component={Cronograma}
         options={{
-          title: 'Calendário',
+          title: 'Cronograma',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="calendar" color={color} size={size} />
           ),
@@ -92,12 +93,12 @@ function RootStack() {
         }}
       />
       <Stack.Screen
-        name="User"
-        component={User}
+        name="Info"
+        component={Info}
         options={{
-          title: 'Conta',
+          title: 'Info',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
+            <MaterialCommunityIcons name="information-outline" color={color} size={size} />
           ),
         }}
       />

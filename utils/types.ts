@@ -2,13 +2,13 @@ import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
 
 export type BottomTabParams = {
     Gincanews: undefined,
-    Calendario: undefined,
+    Cronograma: undefined,
     Notícias: undefined,
-    User: undefined,
+    Info: undefined,
     Start: undefined,
 }
 
-export type UserNavProps = BottomTabScreenProps<BottomTabParams, 'User', 'nav'>
+export type InfoNavProps = BottomTabScreenProps<BottomTabParams, 'Info', 'nav'>
 export type HomeNavProps = BottomTabScreenProps<BottomTabParams, 'Gincanews', 'nav'>
-export type CalendarioNavProps = BottomTabScreenProps<BottomTabParams, 'Calendario', 'nav'>
+export type CronogramaNavProps = BottomTabScreenProps<BottomTabParams, 'Cronograma', 'nav'>
 export type NoticiasNavProps = BottomTabScreenProps<BottomTabParams, 'Notícias', 'nav'>
