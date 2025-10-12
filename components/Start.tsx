@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { View, ScrollView, ImageBackground, Image } from "react-native";
 import { Text, useTheme, Card, Button, TextInput, Portal, Modal,} from "react-native-paper";
 import { ContainerStyles, ThemeType } from "../utils/styles";
@@ -10,7 +10,7 @@ export default function Start({ navigation }: HomeNavProps) {
   const back = require("../img/fundo.png");
   const logo = require("../img/logo.png");
 
-  const { signIn, signUp } = useContext(AuthContext)
+  const { signIn, signUp, checkCredentials } = useContext(AuthContext)
 
   // estado login
   const [senhaVisivel, setSenhaVisivel] = useState(false);
@@ -29,6 +29,10 @@ export default function Start({ navigation }: HomeNavProps) {
   const [visible, setVisible] = useState(false);
   const openModal = () => setVisible(true);
   const closeModal = () => setVisible(false);
+  const [sucessoCad, setSucessoCad] = useState(false) // msg de sucesso vai aparecer ou nao
+
+  // estado view erro de credencial
+  const [credentialError, setCredentialError] = useState(false)
 
   return (
     <View style={{ flex: 1 }}>
@@ -81,12 +85,31 @@ export default function Start({ navigation }: HomeNavProps) {
                   />
                 </View>
 
+                <View>
+                  <Text style={[ContainerStyles.cardTitle2, { color: '#B20000' }]}>
+                    { credentialError ? 'Erro: Credenciais inválidas! ' : '' }
+                  </Text>
+                </View>
+                <View>
+                  <Text style={[ContainerStyles.cardTitle2, { color: '#A0C340' }]}>
+                    { sucessoCad ? 'Cadastro bem sucedido! Faça login utilizando suas credenciais' : '' }
+                  </Text>
+                </View>
+
                 {/* Botão Entrar */}
                 <Button
                   mode="contained"
                   style={ContainerStyles.mainButton}
                   labelStyle={{ fontSize: 16, color: "#fff" }}
-                  onPress={() => signIn({ email: email, senha: senha })}
+                  onPress={async () => {
+                    const credentialsValid = await checkCredentials({ email: email, senha: senha })
+                    if (credentialsValid) {
+                      signIn({ email: email, senha: senha })
+                    } else {
+                      setCredentialError(true)
+                    }
+                    setSucessoCad(false)
+                  }}
                 >
                   Entrar
                 </Button>
@@ -224,6 +247,7 @@ export default function Start({ navigation }: HomeNavProps) {
                     email: registerEmail,
                     em: registerEm
                   })
+                  setSucessoCad(true)
                 }}
               >
                 Criar Conta

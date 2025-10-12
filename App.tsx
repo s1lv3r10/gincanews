@@ -2,6 +2,8 @@ import { View, Image, Text } from 'react-native';
 import { PaperProvider, useTheme } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Home from './components/Home';
@@ -33,6 +35,7 @@ type RegisterData = {
 }
 
 const Stack = createBottomTabNavigator<BottomTabParams, 'Nav'>();
+const NoTabStack = createNativeStackNavigator<{Start: undefined, Home: undefined}, 'NoBar'>()
 
 // 🔥 Componente do Header com Logo + Texto
 function HeaderTitle() {
@@ -49,10 +52,83 @@ function HeaderTitle() {
   );
 }
 
+function TabStack() {
+  const theme = useTheme<ThemeType>();
+  return (
+    <Stack.Navigator 
+      id='Nav'
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: theme.colors.vermelhoPrincipal,
+          height: 85,
+        },
+        headerTintColor: theme.colors.onPrimary ?? '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          fontSize: 25,
+        },
+        headerTitleAlign: 'center',
+        headerTitle: () => <HeaderTitle />, // 🔥 Aqui define header padrão
+
+        tabBarStyle: {
+          backgroundColor: theme.colors.vermelhoPrincipal,
+          height: 55,
+        },
+        tabBarActiveTintColor: theme.colors.onPrimary ?? '#fff',
+        tabBarInactiveTintColor: theme.colors.onPrimary ?? '#fff',
+        tabBarItemStyle: {
+          alignItems: 'center',
+          margin: 5,
+        },
+      }}
+    >
+      <Stack.Screen
+        name="Gincanews"
+        component={Home}
+        options={{
+          title: 'Página Inicial',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Cronograma"
+        component={Cronograma}
+        options={{
+          title: 'Cronograma',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="calendar" color={color} size={size} />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Notícias"
+        component={News}
+        options={{
+          title: 'Notícias',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="newspaper" color={color} size={size} />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Info"
+        component={Info}
+        options={{
+          title: 'Info',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="information-outline" color={color} size={size} />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  )
+}
+
 export const AuthContext = createContext(undefined)
 
 function RootStack() {
-  const theme = useTheme<ThemeType>();
   const [state, dispatch] = useReducer(
     (previousState, action) => {
       switch (action.type) {
@@ -105,6 +181,17 @@ function RootStack() {
   // Os dados desses objetos do AuthContext vem da screen Start; ou do modal de cadastro, ou da tela de login
   const authContext = useMemo(() => ({
       // login
+      checkCredentials: async (data: LoginData): Promise<boolean> => {
+        try {
+          console.log('REACHED CHECK CREDENTIAL')
+          const api = new Api()
+          const usuario = await api.AuthUsuario(data.email, data.senha)
+          return true
+        } catch (e: any) {
+          console.log('REACHED CHECK CREDENTIAL ERROR')
+          return false
+        }
+      },
       signIn: async (data: LoginData) => {
         // In a production app, we need to send some data (usually username, password) to server and get a token
         // We will also need to handle errors if sign in failed
@@ -123,100 +210,33 @@ function RootStack() {
         // We will also need to handle errors if sign up failed
         const api = new Api()
         await api.RegisterUsuario(data.email, data.senha, data.login, data.em, data.nome)
-        // After getting token, we need to persist the token using `SecureStore` or any other encrypted storage
-        // In the example, we'll use a dummy token
-
-        dispatch({ type: 'SIGN_IN', token: data.nome });
       },
     }), [])
 
   return (
     <AuthContext.Provider value={authContext}>
-      <Stack.Navigator
-        id="Nav"
+      <NoTabStack.Navigator
+        id="NoBar"
         screenOptions={{
-          headerStyle: {
-            backgroundColor: theme.colors.vermelhoPrincipal,
-            height: 85,
-          },
-          headerTintColor: theme.colors.onPrimary ?? '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            fontSize: 25,
-          },
-          headerTitleAlign: 'center',
-          headerTitle: () => <HeaderTitle />, // 🔥 Aqui define header padrão
-
-          tabBarStyle: {
-            backgroundColor: theme.colors.vermelhoPrincipal,
-            height: 55,
-          },
-          tabBarActiveTintColor: theme.colors.onPrimary ?? '#fff',
-          tabBarInactiveTintColor: theme.colors.onPrimary ?? '#fff',
-          tabBarItemStyle: {
-            alignItems: 'center',
-            margin: 5,
-          },
+          headerShown: false
         }}
       >
           { 
-            state.isLoading
+            state.userToken == null
             ? (
-              <Stack.Screen name='LoadingSplash' component={LoadingSplash} />
-            )
-            : state.userToken == null
-            ? (
-                <Stack.Screen 
+                <NoTabStack.Screen 
                   name='Start'
                   component={Start}
                 />
             )
             : (
-                <>
-                  <Stack.Screen
-                    name="Gincanews"
-                    component={Home}
-                    options={{
-                      title: 'Página Inicial',
-                      tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="home" color={color} size={size} />
-                      ),
-                    }}
+                  <NoTabStack.Screen
+                    name="Home"
+                    component={TabStack}
                   />
-                  <Stack.Screen
-                    name="Cronograma"
-                    component={Cronograma}
-                    options={{
-                      title: 'Cronograma',
-                      tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="calendar" color={color} size={size} />
-                      ),
-                    }}
-                  />
-                  <Stack.Screen
-                    name="Notícias"
-                    component={News}
-                    options={{
-                      title: 'Notícias',
-                      tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="newspaper" color={color} size={size} />
-                      ),
-                    }}
-                  />
-                  <Stack.Screen
-                    name="Info"
-                    component={Info}
-                    options={{
-                      title: 'Info',
-                      tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="information-outline" color={color} size={size} />
-                      ),
-                    }}
-                  />
-                </>
             )
           }
-      </Stack.Navigator>
+      </NoTabStack.Navigator>
     </AuthContext.Provider>
   );
 }
