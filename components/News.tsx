@@ -185,7 +185,6 @@ export default function News({ navigation }: NoticiasNavProps) {
                                 Confira um sumário dos últimos acontecimentos
                             </Text>
                         </View>
-
                         {noticias.map((n) => (
                             <NoticiasCard key={n.id} item={n} />
                         ))}
@@ -213,7 +212,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                             style={ContainerStyles.input}
                             outlineColor="#B20000"
                             activeOutlineColor="#B20000"
-                            value={manchete}
+                            defaultValue={manchete}
                             onChangeText={setManchete}
                         />
                         <TextInput
@@ -222,7 +221,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                             style={ContainerStyles.input}
                             outlineColor="#B20000"
                             activeOutlineColor="#B20000"
-                            value={autor}
+                            defaultValue={autor}
                             onChangeText={setAutor}
                         />
                         <TextInput
@@ -233,7 +232,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                             style={[ContainerStyles.input, { height: 100 }]}
                             outlineColor="#B20000"
                             activeOutlineColor="#B20000"
-                            value={descricao}
+                            defaultValue={descricao}
                             onChangeText={setDescricao}
                         />
                         <TextInput
@@ -242,7 +241,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                             style={ContainerStyles.input}
                             outlineColor="#B20000"
                             activeOutlineColor="#B20000"
-                            value={data}
+                            defaultValue={data}
                             onChangeText={setData}
                         />
                         <Button
@@ -293,7 +292,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                             style={ContainerStyles.input}
                             outlineColor="#B20000"
                             activeOutlineColor="#B20000"
-                            value={manchete}
+                            defaultValue={manchete}
                             onChangeText={setManchete}
                         />
                         <TextInput
@@ -302,7 +301,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                             style={ContainerStyles.input}
                             outlineColor="#B20000"
                             activeOutlineColor="#B20000"
-                            value={autor}
+                            defaultValue={autor}
                             onChangeText={setAutor}
                         />
                         <TextInput
@@ -313,7 +312,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                             style={[ContainerStyles.input, { height: 100 }]}
                             outlineColor="#B20000"
                             activeOutlineColor="#B20000"
-                            value={descricao}
+                            defaultValue={descricao}
                             onChangeText={setDescricao}
                         />
                         <TextInput
@@ -322,7 +321,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                             style={ContainerStyles.input}
                             outlineColor="#B20000"
                             activeOutlineColor="#B20000"
-                            value={data}
+                            defaultValue={data}
                             onChangeText={setData}
                         />
                         <Button

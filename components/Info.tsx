@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { View, ScrollView, Image, ImageBackground } from "react-native";
 import { Text, useTheme, Button, TextInput, Card, Modal, Portal, TouchableRipple, IconButton } from "react-native-paper";
 import { ContainerStyles, ThemeType } from '../utils/styles';
 import { InfoNavProps } from "../utils/types";
+import { AuthContext } from "../App";
 //import Start from "./Start"
 
 export default function Info({ navigation }: InfoNavProps) {
     const theme = useTheme<ThemeType>();
     const back = require('../img/fundo.png');
+
+    const { signOut } = useContext(AuthContext)
+    
 
     //estado da senha
     const [senhaVisivel, setSenhaVisivel] = useState(false);
@@ -49,7 +53,7 @@ export default function Info({ navigation }: InfoNavProps) {
                                 style={ContainerStyles.mainButton}
                                 textColor="#fff"
                                 labelStyle={{ fontSize: 16 }}
-                                onPress={() => navigation.navigate("Start")}
+                                onPress={() => signOut()}
                             >
                                 Logout
                             </Button>

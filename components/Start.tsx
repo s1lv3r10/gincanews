@@ -1,16 +1,29 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { View, ScrollView, ImageBackground, Image } from "react-native";
 import { Text, useTheme, Card, Button, TextInput, Portal, Modal,} from "react-native-paper";
 import { ContainerStyles, ThemeType } from "../utils/styles";
 import { HomeNavProps } from "../utils/types";
+import { AuthContext } from "../App";
 
 export default function Start({ navigation }: HomeNavProps) {
   const theme = useTheme<ThemeType>();
   const back = require("../img/fundo.png");
   const logo = require("../img/logo.png");
 
+  const { signIn, signUp } = useContext(AuthContext)
+
   // estado login
   const [senhaVisivel, setSenhaVisivel] = useState(false);
+
+  const [email, setEmail] = useState('')
+  const [senha, setSenha] = useState('')
+
+  const [registerEmail, setRegisterEmail] = useState('')
+  const [registerNome, setRegisterNome] = useState('')
+  const [registerLogin, setRegisterLogin] = useState('')
+  const [registerEm, setRegisterEm] = useState('')
+  const [registerSenha, setRegisterSenha] = useState('')
+  const [registerSenhaConfirm, setRegisterSenhaConfirm] = useState('')
 
   // estado modal de cadastro
   const [visible, setVisible] = useState(false);
@@ -35,13 +48,15 @@ export default function Start({ navigation }: HomeNavProps) {
 
                 {/* Usuário */}
                 <View>
-                  <Text style={ContainerStyles.cardTitle2}>Nome de Usuário</Text>
+                  <Text style={ContainerStyles.cardTitle2}>Email</Text>
                   <TextInput
-                    label="Nome de Usuário"
+                    label="Email"
                     mode="outlined"
                     style={ContainerStyles.input}
                     outlineColor="#B20000"
                     activeOutlineColor="#B20000"
+                    defaultValue={email}
+                    onChangeText={t => setEmail(t)}
                   />
                 </View>
 
@@ -55,6 +70,8 @@ export default function Start({ navigation }: HomeNavProps) {
                     outlineColor="#B20000"
                     activeOutlineColor="#B20000"
                     secureTextEntry={!senhaVisivel}
+                    defaultValue={senha}
+                    onChangeText={t => setSenha(t)}
                     right={
                       <TextInput.Icon
                         icon={senhaVisivel ? "eye-off" : "eye"}
@@ -69,7 +86,7 @@ export default function Start({ navigation }: HomeNavProps) {
                   mode="contained"
                   style={ContainerStyles.mainButton}
                   labelStyle={{ fontSize: 16, color: "#fff" }}
-                  onPress={() => navigation.navigate("Gincanews")}
+                  onPress={() => signIn({ email: email, senha: senha })}
                 >
                   Entrar
                 </Button>
@@ -120,6 +137,8 @@ export default function Start({ navigation }: HomeNavProps) {
                 style={ContainerStyles.input}
                 outlineColor="#B20000"
                 activeOutlineColor="#B20000"
+                defaultValue={registerNome}
+                onChangeText={t => setRegisterNome(t)}
               />
 
               <Text style={ContainerStyles.cardTitle2}>Nome de Usuário</Text>
@@ -129,6 +148,19 @@ export default function Start({ navigation }: HomeNavProps) {
                 style={ContainerStyles.input}
                 outlineColor="#B20000"
                 activeOutlineColor="#B20000"
+                defaultValue={registerLogin}
+                onChangeText={t => setRegisterLogin(t)}
+              />
+
+              <Text style={ContainerStyles.cardTitle2}>Email</Text>
+              <TextInput
+                label="Email"
+                mode="outlined"
+                style={ContainerStyles.input}
+                outlineColor="#B20000"
+                activeOutlineColor="#B20000"
+                defaultValue={registerEmail}
+                onChangeText={t => setRegisterEmail(t)}
               />
 
               <Text style={ContainerStyles.cardTitle2}>Senha</Text>
@@ -139,6 +171,8 @@ export default function Start({ navigation }: HomeNavProps) {
                 outlineColor="#B20000"
                 activeOutlineColor="#B20000"
                 secureTextEntry={!senhaVisivel}
+                defaultValue={registerSenha}
+                onChangeText={t => setRegisterSenha(t)}
                 right={
                   <TextInput.Icon
                     icon={senhaVisivel ? "eye-off" : "eye"}
@@ -154,6 +188,8 @@ export default function Start({ navigation }: HomeNavProps) {
                 style={ContainerStyles.input}
                 outlineColor="#B20000"
                 activeOutlineColor="#B20000"
+                defaultValue={registerSenhaConfirm}
+                onChangeText={t => setRegisterSenhaConfirm(t)}
                 secureTextEntry={!senhaVisivel}
                 right={
                   <TextInput.Icon
@@ -163,11 +199,13 @@ export default function Start({ navigation }: HomeNavProps) {
                 }
               />
 
-              <Text style={ContainerStyles.cardTitle2}>EM</Text>
+              <Text style={ContainerStyles.cardTitle2}>EM (digite como "EM(numero)"")</Text>
               <TextInput
                 label="EM"
                 mode="outlined"
                 style={ContainerStyles.input}
+                defaultValue={registerEm}
+                onChangeText={t => setRegisterEm(t)}
                 outlineColor="#B20000"
                 activeOutlineColor="#B20000"
               />
@@ -177,7 +215,16 @@ export default function Start({ navigation }: HomeNavProps) {
                 style={ContainerStyles.mainButton}
                 textColor="#fff"
                 labelStyle={{ fontSize: 16 }}
-                onPress={closeModal}
+                onPress={() => {
+                  closeModal()
+                  signUp({
+                    nome: registerNome,
+                    login: registerLogin,
+                    senha: registerSenha,
+                    email: registerEmail,
+                    em: registerEm
+                  })
+                }}
               >
                 Criar Conta
               </Button>

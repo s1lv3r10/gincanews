@@ -1,12 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, ScrollView, ImageBackground } from "react-native";
 import { Text, useTheme, Card, Button, TouchableRipple, IconButton, Modal, Portal, TextInput,} from "react-native-paper";
 import { ContainerStyles, ThemeType } from "../utils/styles";
-import { CronogramaNavProps } from "../utils/types";
+import { CronogramaType, CronogramaNavProps } from "../utils/types";
+import { Api } from "../utils/api";
 
 export default function Cronograma({ navigation }: CronogramaNavProps) {
     const theme = useTheme<ThemeType>();
     const back = require("../img/fundo.png");
+
+    // Pegar eventos
+    const api = new Api()
+    useEffect(() => {
+        (async () => {
+            const eves = await api.getCronos()
+            setEventos(eves)
+            console.log('USE EFFECT CALLED')
+            console.log(eves)
+        })()
+    }, [])
 
     // Estados dos modais
     const [visibleAdd, setVisibleAdd] = useState(false);
@@ -22,6 +34,8 @@ export default function Cronograma({ navigation }: CronogramaNavProps) {
         mes: "",
         titulo: "",
     });
+
+    const [eventos, setEventos] = useState([])
 
     // Funções abrir/fechar modais
     const openAddModal = () => setVisibleAdd(true);
@@ -59,7 +73,7 @@ export default function Cronograma({ navigation }: CronogramaNavProps) {
                                     <Text
                                         style={[
                                             ContainerStyles.titulo,
-                                            { flexDirection: "row", flex: 1, marginRight: 8 },
+                                            { flexDirection: "row", flex: 1, marginRight: 8, textAlign: `left` },
                                         ]}
                                         numberOfLines={1}
                                     >
@@ -176,11 +190,12 @@ export default function Cronograma({ navigation }: CronogramaNavProps) {
                             <Text style={ContainerStyles.grayDot} children={""} />
                         </View>
 
-                        {/* Exemplos */}
-                        <Evento dia="27" mes="Jun" titulo="Entrega do Leite" />
-                        <Evento2 dia="27" mes="Jun" titulo="Entrega do Leite" />
-                        <Evento dia="27" mes="Jun" titulo="Entrega do Leite" />
-                        <Evento2 dia="27" mes="Jun" titulo="Entrega do Leite" />
+                        { eventos.map((evento: CronogramaType) => {
+                            const dataEv = new Date(evento.data_crono)
+                            const dia = dataEv.getDay().toString()
+                            const mes = dataEv.toLocaleString('pt-BR', { month: 'short' })
+                            return <Evento key={evento.id_crono} dia={dia} mes={mes} titulo={evento.desc_cono} />
+                        }) }
                     </View>
                 </ScrollView>
             </ImageBackground>
@@ -215,7 +230,7 @@ export default function Cronograma({ navigation }: CronogramaNavProps) {
                                 style={ContainerStyles.input}
                                 outlineColor="#B20000"
                                 activeOutlineColor="#B20000"
-                                value={dia}
+                                defaultValue={dia}
                                 onChangeText={setDia}
                             />
                             <TextInput
@@ -224,7 +239,7 @@ export default function Cronograma({ navigation }: CronogramaNavProps) {
                                 style={ContainerStyles.input}
                                 outlineColor="#B20000"
                                 activeOutlineColor="#B20000"
-                                value={mes}
+                                defaultValue={mes}
                                 onChangeText={setMes}
                             />
                             <TextInput
@@ -233,7 +248,7 @@ export default function Cronograma({ navigation }: CronogramaNavProps) {
                                 style={ContainerStyles.input}
                                 outlineColor="#B20000"
                                 activeOutlineColor="#B20000"
-                                value={titulo}
+                                defaultValue={titulo}
                                 onChangeText={setTitulo}
                             />
 
@@ -284,7 +299,7 @@ export default function Cronograma({ navigation }: CronogramaNavProps) {
                                 style={ContainerStyles.input}
                                 outlineColor="#B20000"
                                 activeOutlineColor="#B20000"
-                                value={editEvento.dia}
+                                defaultValue={editEvento.dia}
                                 onChangeText={(text) =>
                                     setEditEvento({ ...editEvento, dia: text })
                                 }
@@ -295,7 +310,7 @@ export default function Cronograma({ navigation }: CronogramaNavProps) {
                                 style={ContainerStyles.input}
                                 outlineColor="#B20000"
                                 activeOutlineColor="#B20000"
-                                value={editEvento.mes}
+                                defaultValue={editEvento.mes}
                                 onChangeText={(text) =>
                                     setEditEvento({ ...editEvento, mes: text })
                                 }
@@ -306,7 +321,7 @@ export default function Cronograma({ navigation }: CronogramaNavProps) {
                                 style={ContainerStyles.input}
                                 outlineColor="#B20000"
                                 activeOutlineColor="#B20000"
-                                value={editEvento.titulo}
+                                defaultValue={editEvento.titulo}
                                 onChangeText={(text) =>
                                     setEditEvento({ ...editEvento, titulo: text })
                                 }
