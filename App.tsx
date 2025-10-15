@@ -181,15 +181,16 @@ function RootStack() {
   // Os dados desses objetos do AuthContext vem da screen Start; ou do modal de cadastro, ou da tela de login
   const authContext = useMemo(() => ({
       // login
-      checkCredentials: async (data: LoginData): Promise<boolean> => {
+      checkCredentials: async (data: LoginData): Promise<number> => {
         try {
           console.log('REACHED CHECK CREDENTIAL')
           const api = new Api()
           const usuario = await api.AuthUsuario(data.email, data.senha)
-          return true
+          return 0
         } catch (e: any) {
           console.log('REACHED CHECK CREDENTIAL ERROR')
-          return false
+          if (e.message = 'AUTH FAIL') return 401
+          else return 500
         }
       },
       signIn: async (data: LoginData) => {

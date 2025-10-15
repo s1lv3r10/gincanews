@@ -32,7 +32,7 @@ export default function Start({ navigation }: HomeNavProps) {
   const [sucessoCad, setSucessoCad] = useState(false) // msg de sucesso vai aparecer ou nao
 
   // estado view erro de credencial
-  const [credentialError, setCredentialError] = useState(false)
+  const [credentialError, setCredentialError] = useState(0)
 
   return (
     <View style={{ flex: 1 }}>
@@ -87,7 +87,13 @@ export default function Start({ navigation }: HomeNavProps) {
 
                 <View>
                   <Text style={[ContainerStyles.cardTitle2, { color: '#B20000' }]}>
-                    { credentialError ? 'Erro: Credenciais inválidas! ' : '' }
+                    { 
+                      credentialError == 401
+                      ? 'Erro: Credenciais inválidas! ' 
+                      : credentialError == 500
+                      ? 'Houve um erro; tente novamente mais tarde!'
+                      : '' 
+                    }
                   </Text>
                 </View>
                 <View>
@@ -103,10 +109,10 @@ export default function Start({ navigation }: HomeNavProps) {
                   labelStyle={{ fontSize: 16, color: "#fff" }}
                   onPress={async () => {
                     const credentialsValid = await checkCredentials({ email: email, senha: senha })
-                    if (credentialsValid) {
+                    if (credentialsValid == 0) {
                       signIn({ email: email, senha: senha })
                     } else {
-                      setCredentialError(true)
+                      setCredentialError(credentialsValid)
                     }
                     setSucessoCad(false)
                   }}

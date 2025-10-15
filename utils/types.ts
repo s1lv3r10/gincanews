@@ -26,3 +26,10 @@ export type UsuarioType = {
     email_user: string,
     nome_user: string,
 }
+
+export type FullUsuarioType = {
+    email_user: string,
+    nome_user: string,
+    login_user: string,
+    em_user: string
+}

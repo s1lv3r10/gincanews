@@ -1,4 +1,4 @@
-import { CronogramaType, UsuarioType } from "./types"
+import { CronogramaType, FullUsuarioType, UsuarioType } from "./types"
 
 export class Api {
     constructor() {
@@ -6,13 +6,84 @@ export class Api {
     }
     private defaultUrl: string = 'https://functions-tcc-egcnbkhrg6e5cnfu.brazilsouth-01.azurewebsites.net/api'
     
-    public async getCronos(em_crono: string = 'EM0'): Promise<CronogramaType[]> {
+    public async getCronos(em_crono: string): Promise<CronogramaType[]> {
         const req = await fetch(`${this.defaultUrl}/crono/get?em_crono=${em_crono}`, {
             method: 'GET'
         })
+        console.log(req.url)
         const json: CronogramaType[] = await req.json()
 
         return json
+    }
+
+    public async deleteCrono(id_crono: number, xUserLogged: number) {
+        await fetch(`${this.defaultUrl}/crono/delete`, {
+            method: 'DELETE',
+            headers: {
+                "x-user-logged": xUserLogged.toString()
+            },
+            body: JSON.stringify({
+                id_crono: id_crono,
+            }),
+        })
+    }
+
+    public async registerCrono(desc_cono: string, data_crono: string, em_crono: string, xUserLogged: number) {
+        await fetch(`${this.defaultUrl}/crono/register`, {
+            method: 'POST',
+            headers: {
+                "x-user-logged": xUserLogged.toString()
+            },
+            body: JSON.stringify({
+                desc_cono: desc_cono,
+                em_crono: em_crono,
+                data_crono: data_crono,
+            }),
+        })
+    }
+
+    public async updateCrono(
+        id_crono: number, 
+        desc_cono: string, 
+        data_crono: string, 
+        em_crono: string, 
+        xUserLogged: number
+    ) {
+        try {
+            console.log('[UPDATE] try reached')
+            const data = { 
+                id_crono: id_crono,
+                em_crono: em_crono,
+                data_crono: data_crono,
+                desc_cono: desc_cono,
+            }
+            console.log(data)
+            const req = await fetch(`${this.defaultUrl}/crono/update`, {
+                method: 'POST',
+                headers: {
+                    "x-user-logged": xUserLogged.toString()
+                },
+                body: JSON.stringify({
+                    id_crono: id_crono,
+                    em_crono: em_crono,
+                    data_crono: data_crono,
+                    desc_cono: desc_cono,
+                }),
+            })
+            console.log('[UPDATE] request made')
+            if (req.status != 200) throw Error(req.status.toString())
+        } catch (e) {
+            console.log(`[UPDATE] something went wrong: ${e.message}`)
+        }
+    }
+
+    public async getUsuario(id_user: number): Promise<FullUsuarioType> {
+        const req = await fetch(`${this.defaultUrl}/usuarios/get?id=${id_user}`)
+        const user: FullUsuarioType = await req.json()
+
+        console.log(user)
+
+        return user
     }
 
     public async AuthUsuario(email: string, senha: string): Promise<UsuarioType> {
@@ -23,11 +94,15 @@ export class Api {
                 senha_user: senha,
             })
         })
+        console.log(req.status)
         if (req.ok) {
             const json: UsuarioType & { authorized: boolean } = await req.json()
             return json
-        } else {
-            throw Error('Autenticação falhou!')
+        } else if (req.status == 401) {
+            throw Error('AUTH FAIL')
+        }
+        else {
+            throw Error('UNKNOWN')
         } 
     }
 
