@@ -1,4 +1,4 @@
-import { CronogramaType, FullUsuarioType, UsuarioType } from "./types"
+import { CronogramaType, FullUsuarioType, NoticiaType, UsuarioType } from "./types"
 
 export class Api {
     constructor() {
@@ -86,6 +86,13 @@ export class Api {
         return user
     }
 
+    public async getAllNews(limit: number = 0): Promise<NoticiaType[]> {
+        const req = await fetch(`${this.defaultUrl}/noticias/all`)
+        const news: NoticiaType[] = await req.json()
+
+        return news
+    }
+
     public async AuthUsuario(email: string, senha: string): Promise<UsuarioType> {
         const req = await fetch(`${this.defaultUrl}/usuarios/auth`, {
             method: 'POST',
@@ -123,5 +130,28 @@ export class Api {
                 nome_user: nome
             })
         })
+    }
+
+    public async updateUsuario(
+        id: number,
+        email: string,
+        senha: string,
+        login: string,
+        em: string,
+        nome: string,
+    ): Promise<number> {
+        const req = await fetch(`${this.defaultUrl}/usuarios/update`, {
+            method: 'POST',
+            body: JSON.stringify({
+                id_user: id,
+                email_user: email,
+                senha_user: senha,
+                login_user: login,
+                em_user: em,
+                nome_user: nome
+            })
+        })
+
+        return req.status
     }
 }

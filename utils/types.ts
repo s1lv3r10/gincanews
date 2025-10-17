@@ -33,3 +33,10 @@ export type FullUsuarioType = {
     login_user: string,
     em_user: string
 }
+
+export type NoticiaType = {
+    mmanchete_not: string,
+    desc_not: string,
+    data_not: string,
+    midia_not: string,
+}

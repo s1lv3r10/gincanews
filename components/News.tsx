@@ -1,19 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, ScrollView, ImageBackground, Image } from "react-native";
 import { Text, useTheme, Card, TouchableRipple, IconButton, Portal, Modal, Button, TextInput } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
-import { NoticiasNavProps } from "../utils/types";
+import * as SecureStore from 'expo-secure-store'
+import { NoticiasNavProps, NoticiaType } from "../utils/types";
 import { ContainerStyles, ThemeType } from "../utils/styles";
+import { Api } from "../utils/api";
 
 export default function News({ navigation }: NoticiasNavProps) {
     const back = require("../img/fundo.png");
     const theme = useTheme<ThemeType>();
 
-    // Lista de notícias
-    const [noticias, setNoticias] = useState([
-        { id: 1, manchete: "EM2 Campeão do Vôlei", foto: "https://picsum.photos/700", autor: "EM2", descricao: "Grande vitória do time EM2 na final do campeonato de vôlei.", data: "2025-10-07" },
-        { id: 2, manchete: "Como abrir recursos?", foto: "https://picsum.photos/700", autor: "Coordenação", descricao: "Saiba o passo a passo para abrir recursos junto à coordenação.", data: "2025-10-05" },
-    ]);
+    const api = new Api()
+    const id = SecureStore.getItem('userLogged')
+    const authorized = parseInt(id) <= 12
+
+    const [news, setNews] = useState<NoticiaType[]>([])
+
+    const generateEvents = async () => {
+        const news = await api.getAllNews()
+        console.log(news)
+
+        setNews(news)
+    }
+
+    useEffect(() => {
+        generateEvents()
+    }, [])
 
     // Estados dos modais
     const [visibleAdd, setVisibleAdd] = useState(false);
@@ -29,7 +42,7 @@ export default function News({ navigation }: NoticiasNavProps) {
     const [editingId, setEditingId] = useState<number | null>(null);
 
     // Estado para detalhe
-    const [selectedNoticia, setSelectedNoticia] = useState<any>(null);
+    const [selectedNoticia, setSelectedNoticia] = useState<NoticiaType>(null);
 
     // Função para escolher imagem
     const pickImage = async () => {
@@ -50,40 +63,40 @@ export default function News({ navigation }: NoticiasNavProps) {
     };
 
     // Adicionar notícia
-    const handleAdd = () => {
-        if (!manchete || !autor || !descricao || !data || !foto) {
-            alert("Preencha todos os campos!");
-            return;
-        }
-        const nova = {
-            id: Date.now(),
-            manchete,
-            foto,
-            autor,
-            descricao,
-            data
-        };
-        setNoticias([...noticias, nova]);
-        setVisibleAdd(false);
-        limparCampos();
-    };
+    // const handleAdd = () => {
+    //     if (!manchete || !autor || !descricao || !data || !foto) {
+    //         alert("Preencha todos os campos!");
+    //         return;
+    //     }
+    //     const nova = {
+    //         id: Date.now(),
+    //         manchete,
+    //         foto,
+    //         autor,
+    //         descricao,
+    //         data
+    //     };
+    //     setNoticias([...noticias, nova]);
+    //     setVisibleAdd(false);
+    //     limparCampos();
+    // };
 
-    // Editar notícia
-    const handleEdit = () => {
-        if (!editingId) return;
-        setNoticias(
-            noticias.map((n) =>
-                n.id === editingId ? { ...n, manchete, autor, descricao, data, foto } : n
-            )
-        );
-        setVisibleEdit(false);
-        limparCampos();
-    };
+    // // Editar notícia
+    // const handleEdit = () => {
+    //     if (!editingId) return;
+    //     setNoticias(
+    //         noticias.map((n) =>
+    //             n.id === editingId ? { ...n, manchete, autor, descricao, data, foto } : n
+    //         )
+    //     );
+    //     setVisibleEdit(false);
+    //     limparCampos();
+    // };
 
-    // Excluir notícia
-    const handleDelete = (id: number) => {
-        setNoticias(noticias.filter((n) => n.id !== id));
-    };
+    // // Excluir notícia
+    // const handleDelete = (id: number) => {
+    //     setNoticias(noticias.filter((n) => n.id !== id));
+    // };
 
     // Abrir modal de edição
     const abrirEdicao = (noticia: any) => {
@@ -97,7 +110,7 @@ export default function News({ navigation }: NoticiasNavProps) {
     };
 
     // Abrir modal de detalhes
-    const abrirDetalhes = (noticia: any) => {
+    const abrirDetalhes = (noticia: NoticiaType) => {
         setSelectedNoticia(noticia);
         setVisibleDetail(true);
     };
@@ -113,7 +126,7 @@ export default function News({ navigation }: NoticiasNavProps) {
     };
 
     // Componente do card
-    const NoticiasCard = ({ item }: { item: any }) => {
+    const NoticiasCard = ({ item }: { item: NoticiaType }) => {
         return (
             <View style={{ flex: 1, padding: 5 }}>
                 <TouchableRipple onPress={() => abrirDetalhes(item)} borderless>
@@ -132,30 +145,37 @@ export default function News({ navigation }: NoticiasNavProps) {
                                     style={[ContainerStyles.cardTitle2, { flex: 1, marginRight: 8 }]}
                                     numberOfLines={1}
                                 >
-                                    {item.manchete}
+                                    {item.mmanchete_not}
                                 </Text>
-                                <View style={{ flexDirection: "row" }}>
-                                    <IconButton
-                                        icon="pencil"
-                                        size={20}
-                                        onPress={() => abrirEdicao(item)}
-                                    />
-                                    <IconButton
-                                        icon="delete"
-                                        size={20}
-                                        onPress={() => handleDelete(item.id)}
-                                    />
-                                </View>
+                                {
+                                    authorized
+                                    ? 
+                                    (
+                                        <View style={{ flexDirection: "row" }}>
+                                            <IconButton
+                                                icon="pencil"
+                                                size={20}
+                                                // onPress={() => abrirEdicao(item)}
+                                            />
+                                            <IconButton
+                                                icon="delete"
+                                                size={20}
+                                                // onPress={() => handleDelete(item.id)}
+                                            />
+                                        </View>
+                                    )
+                                    : (<></>)
+                                }
                             </View>
                         </Card.Content>
 
                         {/* Foto */}
-                        <Card.Cover source={{ uri: item.foto }} style={ContainerStyles.imagemCard} />
+                        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} style={ContainerStyles.imagemCard} />
 
                         {/* Autor */}
                         <Card.Content>
                             <Text variant="titleSmall" style={ContainerStyles.cardSubTitle}>
-                                Postado por: {item.autor}
+                                Postado em {new Date(item.data_not).toLocaleString('pt-BR', { dateStyle: 'medium' })}
                             </Text>
                         </Card.Content>
                     </Card>
@@ -163,30 +183,37 @@ export default function News({ navigation }: NoticiasNavProps) {
             </View>
         );
     };
-
+    
     return (
         <View style={{ flex: 1 }}>
             <ImageBackground source={back} resizeMode="cover">
                 <ScrollView>
                     <View style={{ flex: 1, padding: 16 }}>
                         <View style={ContainerStyles.Topo}>
-                            <View style={{ flexDirection: "row" }}>
+                            <View style={{ flexDirection: "row", alignItems: 'center' }}>
                                 <Text style={[ContainerStyles.Title, { marginRight: -10 }]}>
                                     Últimos Eventos
                                 </Text>
-                                <IconButton
-                                    icon="plus-circle"
-                                    size={30}
-                                    style={{ marginLeft: 20 }}
-                                    onPress={() => setVisibleAdd(true)}
-                                />
+                                {
+                                    authorized
+                                    ?
+                                    (
+                                        <IconButton
+                                            icon="plus-circle"
+                                            size={30}
+                                            style={{ marginLeft: 20 }}
+                                            onPress={() => setVisibleAdd(true)}
+                                        />
+                                    )
+                                    : (<></>)
+                                }
                             </View>
                             <Text style={ContainerStyles.subTitle}>
                                 Confira um sumário dos últimos acontecimentos
                             </Text>
                         </View>
-                        {noticias.map((n) => (
-                            <NoticiasCard key={n.id} item={n} />
+                        {news.map((n: NoticiaType) => (
+                            <NoticiasCard key={n.mmanchete_not} item={n} />
                         ))}
                     </View>
                 </ScrollView>
@@ -266,7 +293,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                             mode="contained"
                             style={ContainerStyles.mainButton}
                             textColor="#fff"
-                            onPress={handleAdd}
+                            // onPress={handleAdd}
                         >
                             Salvar
                         </Button>
@@ -346,7 +373,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                             mode="contained"
                             style={ContainerStyles.mainButton}
                             textColor="#fff"
-                            onPress={handleEdit}
+                            // onPress={handleEdit}
                         >
                             Salvar Alterações
                         </Button>
@@ -366,20 +393,17 @@ export default function News({ navigation }: NoticiasNavProps) {
                         {selectedNoticia && (
                             <>
                                 <Text variant="titleLarge" style={{ marginBottom: 10 }}>
-                                    {selectedNoticia.manchete}
+                                    {selectedNoticia.mmanchete_not}
                                 </Text>
                                 <Image
-                                    source={{ uri: selectedNoticia.foto }}
+                                    source={{ uri: 'https://picsum.photos/700' }}
                                     style={{ width: "100%", height: 180, marginBottom: 10 }}
                                 />
                                 <Text variant="bodyMedium" style={{ marginBottom: 10 }}>
-                                    {selectedNoticia.descricao}
-                                </Text>
-                                <Text variant="bodySmall" style={{ marginBottom: 5 }}>
-                                    Postado por: {selectedNoticia.autor}
+                                    {selectedNoticia.desc_not.replaceAll('%', ',')}
                                 </Text>
                                 <Text variant="bodySmall">
-                                    Data: {selectedNoticia.data}
+                                    Postado em {new Date(selectedNoticia.data_not).toLocaleString('pt-BR', { dateStyle: 'medium' })}
                                 </Text>
                             </>
                         )}

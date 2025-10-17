@@ -1,11 +1,51 @@
 import { View, ScrollView, ImageBackground } from "react-native";
+import * as SecureStore from 'expo-secure-store'
 import { Text, useTheme, Card, Button, TouchableRipple } from "react-native-paper";
 import { ContainerStyles, ThemeType } from '../utils/styles';
-import { HomeNavProps } from "../utils/types";
+import { CronogramaType, HomeNavProps, NoticiaType } from "../utils/types";
+import { Api } from "../utils/api";
+import { useEffect, useState } from "react";
+
 
 export default function Home({ navigation }: HomeNavProps) {
     const theme = useTheme<ThemeType>();
     const back = require('../img/fundo.png')
+    const api = new Api()
+    const id = SecureStore.getItem('userLogged')
+
+    const [news, setNews] = useState<NoticiaType[]>([])
+    const [eves, setEves] = useState<CronogramaType[]>([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        (async () => {
+            const user = await api.getUsuario(parseInt(id))
+
+            const eves = await api.getCronos(user[0].em_user)
+            const news = await api.getAllNews()
+            console.log(news)
+            console.log(eves)
+
+            setEves(eves)
+            setNews(news)
+
+            setLoading(false)
+        })()
+    }, [])
+    
+    const MinimalNoticia = ({ mmanchete_not }: { mmanchete_not: string }) => {
+        return (
+            <TouchableRipple onPress={() => navigation.navigate('Notícias')} borderless>
+                <Card style={ContainerStyles.cardNews}>
+                    <Card.Content>
+                        <Text variant="titleMedium" style={ContainerStyles.cardText}>
+                            {mmanchete_not ?? '...'} 
+                        </Text>
+                    </Card.Content>
+                </Card>
+            </TouchableRipple>
+        )
+    }
 
     return (
         <View style={{ flex: 1 }}>
@@ -21,7 +61,8 @@ export default function Home({ navigation }: HomeNavProps) {
                                 Última Notícia
                             </Text>
                             <Text variant="bodyMedium" style={ContainerStyles.cardText}>
-                                EM2 Campeão do Vôlei
+                                {loading ? '...' : news[0].mmanchete_not }
+                                {/* asfasf */}
                             </Text>
                         </Card.Content>
                         <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
@@ -49,10 +90,12 @@ export default function Home({ navigation }: HomeNavProps) {
                                         Próximo Evento
                                     </Text>
                                     <Text variant="bodyMedium" style={ContainerStyles.cardText}>
-                                        Entrega do Leite
+                                        {loading ? '...' : eves[0].desc_cono}
+                                        {/* lkjl */}
                                     </Text>
                                     <Text variant="bodyLarge" style={ContainerStyles.cardDate}>
-                                        27/06
+                                        {loading ? '...' : new Date(eves[0].data_crono).toLocaleString('pt-BR', { day: '2-digit', month: 'short' })}
+                                        {/* lkajslf */}
                                     </Text>
                                 </Card.Content>
                             </Card>
@@ -65,10 +108,12 @@ export default function Home({ navigation }: HomeNavProps) {
                                         Próximo Evento
                                     </Text>
                                     <Text variant="bodyMedium" style={ContainerStyles.cardText}>
-                                        Quadrilha
+                                        {loading ? '...' : eves[1].desc_cono}
+                                        {/* asfklasjf */}
                                     </Text>
                                     <Text variant="bodyLarge" style={ContainerStyles.cardDate}>
-                                        27/08
+                                        {loading ? '...' : new Date(eves[1].data_crono).toLocaleString('pt-BR', { day: '2-digit', month: 'short' })}
+                                        {/* aslfkjal */}
                                     </Text>
                                 </Card.Content>
                             </Card>
@@ -95,35 +140,14 @@ export default function Home({ navigation }: HomeNavProps) {
                                 Confira um sumário dos últimos acontecimentos
                             </Text>
                         </View>
-                        <TouchableRipple onPress={() => navigation.navigate('Notícias')} borderless>
-                            <Card style={ContainerStyles.cardNews}>
-                                <Card.Content>
-                                    <Text variant="titleMedium" style={ContainerStyles.cardText}>
-                                        Como abrir recursos?
-                                    </Text>
-                                </Card.Content>
-                            </Card>
-                        </TouchableRipple>
 
-                        <TouchableRipple onPress={() => navigation.navigate('Notícias')} borderless>
-                            <Card style={ContainerStyles.cardNews}>
-                                <Card.Content>
-                                    <Text variant="titleMedium" style={ContainerStyles.cardText}>
-                                        Cosplay, veja ganhadores
-                                    </Text>
-                                </Card.Content>
-                            </Card>
-                        </TouchableRipple>
-
-                        <TouchableRipple onPress={() => navigation.navigate('Notícias')} borderless>
-                            <Card style={ContainerStyles.cardNews}>
-                                <Card.Content>
-                                    <Text variant="titleMedium" style={ContainerStyles.cardText}>
-                                        Esportivas, confira modalidades
-                                    </Text>
-                                </Card.Content>
-                            </Card>
-                        </TouchableRipple>
+                        {
+                            news.map((noticia: NoticiaType) => {
+                                return (
+                                    <MinimalNoticia mmanchete_not={noticia.mmanchete_not} key={noticia.mmanchete_not} />
+                                )
+                            })
+                        }
                     </View>
                 </ScrollView>
             </ImageBackground>
