@@ -34,18 +34,17 @@ export default function News({ navigation }: NoticiasNavProps) {
     const [visibleDetail, setVisibleDetail] = useState(false);
 
     // Inputs
-    const [manchete, setManchete] = useState("");
-    const [autor, setAutor] = useState("");
-    const [descricao, setDescricao] = useState("");
-    const [data, setData] = useState("");
-    const [foto, setFoto] = useState("");
-    const [editingId, setEditingId] = useState<number | null>(null);
+    const [addNoticia, setAddNoticia] = useState<NoticiaType>(null)
+    const [editNoticia, setEditNoticia] = useState<NoticiaType & { id_not: number }>(null) // dar um jeito de pegar esse id do banco
+    const [editingId, setEditingId] = useState<number | null>(null) 
+    
+    const [foto, setFoto] = useState('')
 
     // Estado para detalhe
     const [selectedNoticia, setSelectedNoticia] = useState<NoticiaType>(null);
 
     // Função para escolher imagem
-    const pickImage = async () => {
+    const pickImage = async (from: string) => {
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (!permissionResult.granted) {
             alert("Permissão para acessar a galeria é necessária!");
@@ -59,53 +58,44 @@ export default function News({ navigation }: NoticiasNavProps) {
 
         if (!result.canceled) {
             setFoto(result.assets[0].uri);
+            if (from == 'edit') {
+                setEditNoticia({...editNoticia, midia_not: foto})
+            } else if (from == 'add') {
+                setAddNoticia({...addNoticia, midia_not: foto})
+            }
         }
     };
 
     // Adicionar notícia
-    // const handleAdd = () => {
-    //     if (!manchete || !autor || !descricao || !data || !foto) {
-    //         alert("Preencha todos os campos!");
-    //         return;
-    //     }
-    //     const nova = {
-    //         id: Date.now(),
-    //         manchete,
-    //         foto,
-    //         autor,
-    //         descricao,
-    //         data
-    //     };
-    //     setNoticias([...noticias, nova]);
-    //     setVisibleAdd(false);
-    //     limparCampos();
-    // };
+    const handleAdd = () => {
+        if (!addNoticia.mmanchete_not  || !addNoticia.desc_not || !addNoticia.midia_not || !addNoticia.data_not) {
+            alert("Preencha todos os campos!");
+            return;
+        }
 
-    // // Editar notícia
-    // const handleEdit = () => {
-    //     if (!editingId) return;
-    //     setNoticias(
-    //         noticias.map((n) =>
-    //             n.id === editingId ? { ...n, manchete, autor, descricao, data, foto } : n
-    //         )
-    //     );
-    //     setVisibleEdit(false);
-    //     limparCampos();
-    // };
+        // ! ADD TO DATABASE !
 
-    // // Excluir notícia
+        setVisibleAdd(false);
+        limparCampos();
+    };
+
+    // Editar notícia
+    const handleEdit = () => {
+        if (!editingId) return;
+        // edit in db
+        setVisibleEdit(false);
+        limparCampos();
+    };
+
+    // Excluir notícia
     // const handleDelete = (id: number) => {
     //     setNoticias(noticias.filter((n) => n.id !== id));
     // };
 
     // Abrir modal de edição
-    const abrirEdicao = (noticia: any) => {
-        setEditingId(noticia.id);
-        setManchete(noticia.manchete);
-        setAutor(noticia.autor);
-        setDescricao(noticia.descricao);
-        setData(noticia.data);
-        setFoto(noticia.foto);
+    const abrirEdicao = (noticia: NoticiaType & { id_not: number }) => {
+        setEditNoticia(noticia)
+        setEditingId(noticia.id_not);
         setVisibleEdit(true);
     };
 
@@ -117,11 +107,9 @@ export default function News({ navigation }: NoticiasNavProps) {
 
     // Limpar campos
     const limparCampos = () => {
-        setManchete("");
-        setAutor("");
-        setDescricao("");
-        setData("");
-        setFoto("");
+        setEditNoticia(null)
+        setAddNoticia(null)
+
         setEditingId(null);
     };
 
@@ -155,7 +143,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                                             <IconButton
                                                 icon="pencil"
                                                 size={20}
-                                                // onPress={() => abrirEdicao(item)}
+                                                onPress={() => abrirEdicao({...item, id_not: 1})}
                                             />
                                             <IconButton
                                                 icon="delete"
@@ -212,9 +200,15 @@ export default function News({ navigation }: NoticiasNavProps) {
                                 Confira um sumário dos últimos acontecimentos
                             </Text>
                         </View>
-                        {news.map((n: NoticiaType) => (
-                            <NoticiasCard key={n.mmanchete_not} item={n} />
-                        ))}
+                        {
+                            news 
+                            ? (
+                                news.map((n: NoticiaType) => (
+                                    <NoticiasCard key={n.mmanchete_not} item={n} />
+                                ))
+                            )
+                            : (<></>)
+                        }
                     </View>
                 </ScrollView>
 
@@ -239,17 +233,8 @@ export default function News({ navigation }: NoticiasNavProps) {
                             style={ContainerStyles.input}
                             outlineColor="#B20000"
                             activeOutlineColor="#B20000"
-                            defaultValue={manchete}
-                            onChangeText={setManchete}
-                        />
-                        <TextInput
-                            label="Autor"
-                            mode="outlined"
-                            style={ContainerStyles.input}
-                            outlineColor="#B20000"
-                            activeOutlineColor="#B20000"
-                            defaultValue={autor}
-                            onChangeText={setAutor}
+                            defaultValue={addNoticia ? addNoticia.mmanchete_not : ''}
+                            onChangeText={t => setAddNoticia({...addNoticia, mmanchete_not: t})}
                         />
                         <TextInput
                             label="Descrição"
@@ -259,8 +244,8 @@ export default function News({ navigation }: NoticiasNavProps) {
                             style={[ContainerStyles.input, { height: 100 }]}
                             outlineColor="#B20000"
                             activeOutlineColor="#B20000"
-                            defaultValue={descricao}
-                            onChangeText={setDescricao}
+                            defaultValue={addNoticia ? addNoticia.desc_not : '...'}
+                            onChangeText={t => setAddNoticia({...addNoticia, desc_not: t})}
                         />
                         <TextInput
                             label="Data (AAAA-MM-DD)"
@@ -268,12 +253,12 @@ export default function News({ navigation }: NoticiasNavProps) {
                             style={ContainerStyles.input}
                             outlineColor="#B20000"
                             activeOutlineColor="#B20000"
-                            defaultValue={data}
-                            onChangeText={setData}
+                            defaultValue={addNoticia ? addNoticia.data_not : ''}
+                            onChangeText={t => setAddNoticia({...addNoticia, data_not: t})}
                         />
                         <Button
                             mode="outlined"
-                            onPress={pickImage}
+                            onPress={async () => await pickImage('add')}
                             textColor={theme.colors.vermelhoPrincipal}
                             style={{
                                 borderColor: theme.colors.vermelhoPrincipal,
@@ -293,7 +278,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                             mode="contained"
                             style={ContainerStyles.mainButton}
                             textColor="#fff"
-                            // onPress={handleAdd}
+                            onPress={handleAdd}
                         >
                             Salvar
                         </Button>
@@ -319,17 +304,8 @@ export default function News({ navigation }: NoticiasNavProps) {
                             style={ContainerStyles.input}
                             outlineColor="#B20000"
                             activeOutlineColor="#B20000"
-                            defaultValue={manchete}
-                            onChangeText={setManchete}
-                        />
-                        <TextInput
-                            label="Autor"
-                            mode="outlined"
-                            style={ContainerStyles.input}
-                            outlineColor="#B20000"
-                            activeOutlineColor="#B20000"
-                            defaultValue={autor}
-                            onChangeText={setAutor}
+                            defaultValue={editNoticia ? editNoticia.mmanchete_not : ''}
+                            onChangeText={t => setEditNoticia({...editNoticia, mmanchete_not: t})}
                         />
                         <TextInput
                             label="Descrição"
@@ -339,8 +315,8 @@ export default function News({ navigation }: NoticiasNavProps) {
                             style={[ContainerStyles.input, { height: 100 }]}
                             outlineColor="#B20000"
                             activeOutlineColor="#B20000"
-                            defaultValue={descricao}
-                            onChangeText={setDescricao}
+                            defaultValue={editNoticia ? editNoticia.desc_not.replaceAll('%', ',') : ''}
+                            onChangeText={t => setEditNoticia({...editNoticia, desc_not: t})}
                         />
                         <TextInput
                             label="Data (AAAA-MM-DD)"
@@ -348,12 +324,12 @@ export default function News({ navigation }: NoticiasNavProps) {
                             style={ContainerStyles.input}
                             outlineColor="#B20000"
                             activeOutlineColor="#B20000"
-                            defaultValue={data}
-                            onChangeText={setData}
+                            defaultValue={editNoticia ? editNoticia.data_not.substring(0, 10) : ''}
+                            onChangeText={t => setEditNoticia({...editNoticia, data_not: t})}
                         />
                         <Button
                             mode="outlined"
-                            onPress={pickImage}
+                            onPress={async () => await pickImage('edit')}
                             textColor={theme.colors.vermelhoPrincipal}
                             style={{
                                 borderColor: theme.colors.vermelhoPrincipal,
