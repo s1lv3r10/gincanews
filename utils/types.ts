@@ -35,6 +35,7 @@ export type FullUsuarioType = {
 }
 
 export type NoticiaType = {
+    id_not: number,
     mmanchete_not: string,
     desc_not: string,
     data_not: string,

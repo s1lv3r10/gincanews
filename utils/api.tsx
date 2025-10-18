@@ -90,7 +90,15 @@ export class Api {
         const req = await fetch(`${this.defaultUrl}/noticias/all`)
         const news: NoticiaType[] = await req.json()
 
-        return news
+        if (limit > 0) {
+            let ret: NoticiaType[] = []
+
+            for (let i = 0; i < limit; i++) {
+                ret.push(news[i])
+            }
+
+            return ret
+        } else return news
     }
 
     public async AuthUsuario(email: string, senha: string): Promise<UsuarioType> {

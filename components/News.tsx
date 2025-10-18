@@ -35,7 +35,7 @@ export default function News({ navigation }: NoticiasNavProps) {
 
     // Inputs
     const [addNoticia, setAddNoticia] = useState<NoticiaType>(null)
-    const [editNoticia, setEditNoticia] = useState<NoticiaType & { id_not: number }>(null) // dar um jeito de pegar esse id do banco
+    const [editNoticia, setEditNoticia] = useState<NoticiaType>(null) // dar um jeito de pegar esse id do banco
     const [editingId, setEditingId] = useState<number | null>(null) 
     
     const [foto, setFoto] = useState('')
@@ -93,7 +93,7 @@ export default function News({ navigation }: NoticiasNavProps) {
     // };
 
     // Abrir modal de edição
-    const abrirEdicao = (noticia: NoticiaType & { id_not: number }) => {
+    const abrirEdicao = (noticia: NoticiaType) => {
         setEditNoticia(noticia)
         setEditingId(noticia.id_not);
         setVisibleEdit(true);
@@ -143,7 +143,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                                             <IconButton
                                                 icon="pencil"
                                                 size={20}
-                                                onPress={() => abrirEdicao({...item, id_not: 1})}
+                                                onPress={() => abrirEdicao(item)}
                                             />
                                             <IconButton
                                                 icon="delete"
@@ -204,7 +204,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                             news 
                             ? (
                                 news.map((n: NoticiaType) => (
-                                    <NoticiasCard key={n.mmanchete_not} item={n} />
+                                    <NoticiasCard key={n.id_not} item={n} />
                                 ))
                             )
                             : (<></>)
