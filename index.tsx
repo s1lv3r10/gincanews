@@ -2,6 +2,9 @@ import { registerRootComponent } from 'expo';
 
 import App from './App';
 
+Blob.prototype[Symbol.toStringTag] = 'Blob'
+File.prototype[Symbol.toStringTag] = 'File'
+
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in Expo Go or in a native build,
 // the environment is set up appropriately

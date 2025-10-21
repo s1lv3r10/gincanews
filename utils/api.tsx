@@ -1,5 +1,12 @@
 import { CronogramaType, FullUsuarioType, NoticiaType, UsuarioType } from "./types"
 
+type NoticiaRequest = {
+    data: NoticiaType,
+    filename_orig: string,
+    img: string,
+    file_mime: string,
+}
+
 export class Api {
     constructor() {
 
@@ -99,6 +106,24 @@ export class Api {
 
             return ret
         } else return news
+    }
+
+    public async registerNews(data: NoticiaRequest, xUserLogged: number) {
+        const req = await fetch(`${this.defaultUrl}/noticias/register`, {
+            method: 'POST',
+            headers: {
+                "x-user-logged": xUserLogged.toString()
+            },
+            body: JSON.stringify({
+                mmanchete_not: data.data.mmanchete_not,
+                desc_not: data.data.desc_not,
+                data_not: data.data.data_not,
+                img: data.img,
+                file_mime: data.file_mime,
+                filename_orig: data.filename_orig
+            }),
+        })
+        return req.status
     }
 
     public async AuthUsuario(email: string, senha: string): Promise<UsuarioType> {

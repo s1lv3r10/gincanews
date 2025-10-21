@@ -1,11 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { View, ScrollView, ImageBackground, Image } from "react-native";
 import { Text, useTheme, Card, TouchableRipple, IconButton, Portal, Modal, Button, TextInput } from "react-native-paper";
-import * as ImagePicker from "expo-image-picker";
+import * as ImagePicker from "expo-image-picker/src/ImagePicker" 
 import * as SecureStore from 'expo-secure-store'
 import { NoticiasNavProps, NoticiaType } from "../utils/types";
 import { ContainerStyles, ThemeType } from "../utils/styles";
 import { Api } from "../utils/api";
+
+type FotoMeta = {
+    filename: string,
+    size: number,
+    mime: string,
+    base64: string
+}
+
+function arrayBufferToBase64( buffer: ArrayBuffer ): string {
+    var binary = '';
+    var bytes = new Uint8Array( buffer );
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] );
+    }
+    return btoa( binary );
+}
 
 export default function News({ navigation }: NoticiasNavProps) {
     const back = require("../img/fundo.png");
@@ -39,6 +56,7 @@ export default function News({ navigation }: NoticiasNavProps) {
     const [editingId, setEditingId] = useState<number | null>(null) 
     
     const [foto, setFoto] = useState('')
+    const [fotoMeta, setFotoMeta] = useState<FotoMeta>(null)
 
     // Estado para detalhe
     const [selectedNoticia, setSelectedNoticia] = useState<NoticiaType>(null);
@@ -54,10 +72,18 @@ export default function News({ navigation }: NoticiasNavProps) {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             quality: 1,
+            allowsEditing: true,
+            base64: true
         });
 
         if (!result.canceled) {
             setFoto(result.assets[0].uri);
+            setFotoMeta({
+                filename: result.assets[0].fileName,
+                size: result.assets[0].fileSize,
+                mime: result.assets[0].mimeType,
+                base64: result.assets[0].base64
+            })
             if (from == 'edit') {
                 setEditNoticia({...editNoticia, midia_not: foto})
             } else if (from == 'add') {
@@ -67,13 +93,17 @@ export default function News({ navigation }: NoticiasNavProps) {
     };
 
     // Adicionar notícia
-    const handleAdd = () => {
+    const handleAdd = async () => {
         if (!addNoticia.mmanchete_not  || !addNoticia.desc_not || !addNoticia.midia_not || !addNoticia.data_not) {
             alert("Preencha todos os campos!");
             return;
         }
 
         // ! ADD TO DATABASE !
+        const fotoB64 = fotoMeta.base64
+
+        // const result = await api.registerNews({ data: addNoticia, filename_orig: fotoMeta.filename, img: fotoB64, file_mime: fotoMeta.mime }, parseInt(id))
+        // console.log(result)
 
         setVisibleAdd(false);
         limparCampos();
@@ -270,7 +300,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                         </Button>
                         {foto ? (
                             <Image
-                                source={{ uri: foto }}
+                                source={{ uri: `data:${fotoMeta.mime};base64,${fotoMeta.base64}` }}
                                 style={{ width: "100%", height: 150, marginBottom: 10 }}
                             />
                         ) : null}
@@ -278,7 +308,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                             mode="contained"
                             style={ContainerStyles.mainButton}
                             textColor="#fff"
-                            onPress={handleAdd}
+                            onPress={async  () => await handleAdd()}
                         >
                             Salvar
                         </Button>
