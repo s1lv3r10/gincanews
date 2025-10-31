@@ -23,7 +23,7 @@ export default function Home({ navigation }: HomeNavProps) {
 
             const eves = await api.getCronos(user[0].em_user)
             const news = await api.getAllNews()
-            console.log(news)
+            // console.log(news)
             console.log(eves)
 
             setEves(eves)
@@ -144,7 +144,7 @@ export default function Home({ navigation }: HomeNavProps) {
                         {
                             news.map((noticia: NoticiaType) => {
                                 return (
-                                    <MinimalNoticia mmanchete_not={noticia.mmanchete_not} key={noticia.mmanchete_not} />
+                                    <MinimalNoticia mmanchete_not={noticia.mmanchete_not} key={noticia.id_not} />
                                 )
                             })
                         }

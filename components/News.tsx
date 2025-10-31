@@ -36,7 +36,7 @@ export default function News({ navigation }: NoticiasNavProps) {
 
     const generateEvents = async () => {
         const news = await api.getAllNews()
-        console.log(news)
+        // console.log(news)
 
         setNews(news)
     }
@@ -102,8 +102,8 @@ export default function News({ navigation }: NoticiasNavProps) {
         // ! ADD TO DATABASE !
         const fotoB64 = fotoMeta.base64
 
-        // const result = await api.registerNews({ data: addNoticia, filename_orig: fotoMeta.filename, img: fotoB64, file_mime: fotoMeta.mime }, parseInt(id))
-        // console.log(result)
+        const result = await api.registerNews({ data: addNoticia, filename_orig: fotoMeta.filename, img: fotoB64, file_mime: fotoMeta.mime }, parseInt(id))
+        console.log(result)
 
         setVisibleAdd(false);
         limparCampos();
@@ -145,6 +145,7 @@ export default function News({ navigation }: NoticiasNavProps) {
 
     // Componente do card
     const NoticiasCard = ({ item }: { item: NoticiaType }) => {
+        const url = item.midia_not == 'SEM_MIDIA' ? 'https://picsum.photos/700' : item.midia_not
         return (
             <View style={{ flex: 1, padding: 5 }}>
                 <TouchableRipple onPress={() => abrirDetalhes(item)} borderless>
@@ -188,12 +189,12 @@ export default function News({ navigation }: NoticiasNavProps) {
                         </Card.Content>
 
                         {/* Foto */}
-                        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} style={ContainerStyles.imagemCard} />
+                        <Card.Cover source={{ uri: url }} style={ContainerStyles.imagemCard} />
 
                         {/* Autor */}
                         <Card.Content>
                             <Text variant="titleSmall" style={ContainerStyles.cardSubTitle}>
-                                Postado em {new Date(item.data_not).toLocaleString('pt-BR', { dateStyle: 'medium' })}
+                                Postado em {new Date(item.data_not).toLocaleString('pt-BR', { dateStyle: 'medium' })} por {item.autor_not}
                             </Text>
                         </Card.Content>
                     </Card>
@@ -402,7 +403,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                                     {selectedNoticia.mmanchete_not}
                                 </Text>
                                 <Image
-                                    source={{ uri: 'https://picsum.photos/700' }}
+                                    source={{ uri: selectedNoticia.midia_not == 'SEM_MIDIA' ? 'https://picsum.photos/700': selectedNoticia.midia_not }}
                                     style={{ width: "100%", height: 180, marginBottom: 10 }}
                                 />
                                 <Text variant="bodyMedium" style={{ marginBottom: 10 }}>
