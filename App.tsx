@@ -22,7 +22,7 @@ import LoadingSplash from './components/LoadingSplash';
 
 // Tipos dos forms de autenticacao
 type LoginData = {
-  email: string,
+  username: string,
   senha: string,
 }
 
@@ -185,7 +185,7 @@ function RootStack() {
         try {
           console.log('REACHED CHECK CREDENTIAL')
           const api = new Api()
-          const usuario = await api.AuthUsuario(data.email, data.senha)
+          const usuario = await api.AuthUsuario(data.username, data.senha)
           return 0
         } catch (e: any) {
           console.log('REACHED CHECK CREDENTIAL ERROR')
@@ -197,7 +197,7 @@ function RootStack() {
         // In a production app, we need to send some data (usually username, password) to server and get a token
         // We will also need to handle errors if sign in failed
         const api = new Api()
-        const usuario = await api.AuthUsuario(data.email, data.senha) // ignorando o erro por agora
+        const usuario = await api.AuthUsuario(data.username, data.senha) // ignorando o erro por agora
 
         // After getting token, we need to persist the token using `SecureStore` or any other encrypted storage
         // In the example, we'll use a dummy token

@@ -40,4 +40,5 @@ export type NoticiaType = {
     desc_not: string,
     data_not: string,
     midia_not: string,
+    autor_not: string
 }

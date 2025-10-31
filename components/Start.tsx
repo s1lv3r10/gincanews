@@ -52,9 +52,9 @@ export default function Start({ navigation }: HomeNavProps) {
 
                 {/* Usuário */}
                 <View>
-                  <Text style={ContainerStyles.cardTitle2}>Email</Text>
+                  <Text style={ContainerStyles.cardTitle2}>Nome de Usuário</Text>
                   <TextInput
-                    label="Email"
+                    label="Nome de Usuário"
                     mode="outlined"
                     style={ContainerStyles.input}
                     outlineColor="#B20000"
@@ -108,9 +108,9 @@ export default function Start({ navigation }: HomeNavProps) {
                   style={ContainerStyles.mainButton}
                   labelStyle={{ fontSize: 16, color: "#fff" }}
                   onPress={async () => {
-                    const credentialsValid = await checkCredentials({ email: email, senha: senha })
+                    const credentialsValid = await checkCredentials({ username: email, senha: senha })
                     if (credentialsValid == 0) {
-                      signIn({ email: email, senha: senha })
+                      signIn({ username: email, senha: senha })
                     } else {
                       setCredentialError(credentialsValid)
                     }

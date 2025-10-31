@@ -126,11 +126,11 @@ export class Api {
         return req.status
     }
 
-    public async AuthUsuario(email: string, senha: string): Promise<UsuarioType> {
+    public async AuthUsuario(username: string, senha: string): Promise<UsuarioType> {
         const req = await fetch(`${this.defaultUrl}/usuarios/auth`, {
             method: 'POST',
             body: JSON.stringify({
-                email_user: email,
+                nome_user: username,
                 senha_user: senha,
             })
         })
