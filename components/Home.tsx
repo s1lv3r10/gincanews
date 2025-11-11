@@ -25,6 +25,7 @@ export default function Home({ navigation }: HomeNavProps) {
             const news = await api.getAllNews()
             // console.log(news)
             console.log(eves)
+            console.log(news)
 
             setEves(eves)
             setNews(news)
@@ -33,13 +34,16 @@ export default function Home({ navigation }: HomeNavProps) {
         })()
     }, [])
     
-    const MinimalNoticia = ({ mmanchete_not }: { mmanchete_not: string }) => {
+    const MinimalNoticia = ({ mmanchete_not, autor_not }: { mmanchete_not: string, autor_not: string }) => {
         return (
             <TouchableRipple onPress={() => navigation.navigate('Notícias')} borderless>
                 <Card style={ContainerStyles.cardNews}>
                     <Card.Content>
                         <Text variant="titleMedium" style={ContainerStyles.cardText}>
                             {mmanchete_not ?? '...'} 
+                        </Text>
+                        <Text variant="titleMedium" style={[ContainerStyles.cardSubTitle, { marginBottom: 0 }]}>
+                            {autor_not ?? '...'} 
                         </Text>
                     </Card.Content>
                 </Card>
@@ -55,31 +59,43 @@ export default function Home({ navigation }: HomeNavProps) {
             >
                 <ScrollView contentContainerStyle={{ padding: 16, zIndex: 1 }}>
                     {/* Card de notícia */}
-                    <Card style={ContainerStyles.cardNews}>
-                        <Card.Content>
-                            <Text variant="titleLarge" style={ContainerStyles.cardTitle}>
-                                Última Notícia
-                            </Text>
-                            <Text variant="bodyMedium" style={ContainerStyles.cardText}>
-                                {loading ? '...' : news[0].mmanchete_not }
-                                {/* asfasf */}
-                            </Text>
-                        </Card.Content>
-                        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-                        <Card.Actions style={{ justifyContent: 'center' }}>
-                            <Button
-                                mode="outlined"
-                                textColor={theme.colors.vermelhoPrincipal}
-                                style={{
-                                    borderColor: theme.colors.vermelhoPrincipal,
-                                    borderWidth: 1,
-                                    paddingHorizontal: 20,
-                                }}
-                            >
-                                Veja Mais
-                            </Button>
-                        </Card.Actions>
-                    </Card>
+                    {
+                        !loading && (news.length > 0)
+                        ? (
+                            <Card style={ContainerStyles.cardNews}>
+                                
+
+                                <Card.Content>
+                                    <Text variant="titleLarge" style={ContainerStyles.cardText}>
+                                        Última Notícia
+                                    </Text>
+                                    <Text style={ContainerStyles.cardTitle}>
+                                        {loading ? '...' : news[0].mmanchete_not }
+                                    </Text>
+                                    <Text style={ContainerStyles.cardSubTitle}>
+                                        {loading ? '...' : new Date(news[0].data_not).toLocaleString('pt-BR', { dateStyle: 'long' })}
+                                    </Text>
+                                </Card.Content>
+                                <Card.Cover source={{ uri: loading ? 'https://picsum.photos/700' : news[0].midia_not == 'SEM_MIDIA' ? 'https://picsum.photos/700' : news[0].midia_not }} />
+                                <Card.Actions style={{ justifyContent: 'center' }}>
+                                    <Button
+                                        mode="outlined"
+                                        textColor={theme.colors.vermelhoPrincipal}
+                                        style={{
+                                            borderColor: theme.colors.vermelhoPrincipal,
+                                            borderWidth: 1,
+                                            paddingHorizontal: 20,
+                                        }}
+                                        onPress={() => { navigation.navigate('Notícias') }}
+                                    >
+                                        Veja Mais
+                                    </Button>
+                                </Card.Actions>
+                            </Card>
+                        ) : (
+                            <></>
+                        )
+                    }
 
                     {/* Próximos eventos */}
                     <View style={ContainerStyles.row}>
@@ -142,11 +158,15 @@ export default function Home({ navigation }: HomeNavProps) {
                         </View>
 
                         {
-                            news.map((noticia: NoticiaType) => {
-                                return (
-                                    <MinimalNoticia mmanchete_not={noticia.mmanchete_not} key={noticia.id_not} />
-                                )
-                            })
+                            news.length > 0 ? (
+                                news.map((noticia: NoticiaType) => {
+                                    return (
+                                        <MinimalNoticia mmanchete_not={noticia.mmanchete_not} autor_not={noticia.autor_not} key={noticia.id_not} />
+                                    )
+                                })
+                            ) : (
+                                <></>
+                            )
                         }
                     </View>
                 </ScrollView>

@@ -57,6 +57,7 @@ export default function News({ navigation }: NoticiasNavProps) {
     
     const [foto, setFoto] = useState('')
     const [fotoMeta, setFotoMeta] = useState<FotoMeta>(null)
+    const [imgAltered, setImgAltered] = useState(false)
 
     // Estado para detalhe
     const [selectedNoticia, setSelectedNoticia] = useState<NoticiaType>(null);
@@ -85,7 +86,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                 base64: result.assets[0].base64
             })
             if (from == 'edit') {
-                setEditNoticia({...editNoticia, midia_not: foto})
+                setEditNoticia({...editNoticia, midia_not: result.assets[result.assets.length-1].uri})
             } else if (from == 'add') {
                 setAddNoticia({...addNoticia, midia_not: foto})
             }
@@ -94,15 +95,19 @@ export default function News({ navigation }: NoticiasNavProps) {
 
     // Adicionar notícia
     const handleAdd = async () => {
-        if (!addNoticia.mmanchete_not  || !addNoticia.desc_not || !addNoticia.midia_not || !addNoticia.data_not) {
-            alert("Preencha todos os campos!");
-            return;
-        }
+        // if (!addNoticia.mmanchete_not  || !addNoticia.desc_not || !addNoticia.midia_not || !addNoticia.data_not) {
+        //     alert("Preencha todos os campos!");
+        //     return;
+        // }
 
         // ! ADD TO DATABASE !
         const fotoB64 = fotoMeta.base64
+        addNoticia.desc_not.replaceAll(',', '%')
 
-        const result = await api.registerNews({ data: addNoticia, filename_orig: fotoMeta.filename, img: fotoB64, file_mime: fotoMeta.mime }, parseInt(id))
+        if (addNoticia.data_not == undefined) {
+            addNoticia.data_not = new Date().toISOString().substring(0, 10)
+        }
+        const result = await api.registerNews({ data: addNoticia, filename_orig: fotoMeta.filename, img: fotoB64, file_mime: fotoMeta.mime, id_user: parseInt(id) }, parseInt(id))
         console.log(result)
 
         setVisibleAdd(false);
@@ -110,9 +115,25 @@ export default function News({ navigation }: NoticiasNavProps) {
     };
 
     // Editar notícia
-    const handleEdit = () => {
+    const handleEdit = async () => {
         if (!editingId) return;
         // edit in db
+        const fotoB64 = fotoMeta.base64
+        editNoticia.desc_not.replaceAll(',', '%')
+
+        console.log(imgAltered)
+        const result = await api.updateNews({ 
+            data: editNoticia, 
+            image_altered: imgAltered,
+            img_file: {
+                filename_orig: fotoMeta.filename, 
+                img: fotoB64, 
+                file_mime: fotoMeta.mime
+            },
+            id_user: parseInt(id) 
+        }, parseInt(id))
+        console.log(result)
+
         setVisibleEdit(false);
         limparCampos();
     };
@@ -232,13 +253,17 @@ export default function News({ navigation }: NoticiasNavProps) {
                             </Text>
                         </View>
                         {
-                            news 
+                            news.length > 0
                             ? (
                                 news.map((n: NoticiaType) => (
                                     <NoticiasCard key={n.id_not} item={n} />
                                 ))
                             )
-                            : (<></>)
+                            : (
+                                <Text>
+                                    Sem notícias por aqui!
+                                </Text>
+                            )
                         }
                     </View>
                 </ScrollView>
@@ -284,12 +309,12 @@ export default function News({ navigation }: NoticiasNavProps) {
                             style={ContainerStyles.input}
                             outlineColor="#B20000"
                             activeOutlineColor="#B20000"
-                            defaultValue={addNoticia ? addNoticia.data_not : ''}
+                            defaultValue={new Date().toISOString().substring(0, 10)}
                             onChangeText={t => setAddNoticia({...addNoticia, data_not: t})}
                         />
                         <Button
                             mode="outlined"
-                            onPress={async () => await pickImage('add')}
+                            onPress={async () => { await pickImage('add') }}
                             textColor={theme.colors.vermelhoPrincipal}
                             style={{
                                 borderColor: theme.colors.vermelhoPrincipal,
@@ -302,17 +327,21 @@ export default function News({ navigation }: NoticiasNavProps) {
                         {foto ? (
                             <Image
                                 source={{ uri: `data:${fotoMeta.mime};base64,${fotoMeta.base64}` }}
-                                style={{ width: "100%", height: 150, marginBottom: 10 }}
+                                style={{ maxWidth: 500, maxHeight: 500, minHeight: 250, marginBottom: 10, objectFit: 'contain' }}
                             />
                         ) : null}
                         <Button
                             mode="contained"
                             style={ContainerStyles.mainButton}
                             textColor="#fff"
-                            onPress={async  () => await handleAdd()}
+                            onPress={async () => { 
+                                await handleAdd() 
+                                await generateEvents()
+                            }}
                         >
                             Salvar
                         </Button>
+                        
                     </Modal>
 
                     {/* MODAL EDITAR */}
@@ -360,7 +389,10 @@ export default function News({ navigation }: NoticiasNavProps) {
                         />
                         <Button
                             mode="outlined"
-                            onPress={async () => await pickImage('edit')}
+                            onPress={async () => { 
+                                await pickImage('edit') 
+                                setImgAltered(true)
+                            }}
                             textColor={theme.colors.vermelhoPrincipal}
                             style={{
                                 borderColor: theme.colors.vermelhoPrincipal,
@@ -372,7 +404,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                         </Button>
                         {foto ? (
                             <Image
-                                source={{ uri: foto }}
+                                source={{ uri: editNoticia ? editNoticia.midia_not : '' }}
                                 style={{ width: "100%", height: 150, marginBottom: 10 }}
                             />
                         ) : null}
@@ -380,7 +412,10 @@ export default function News({ navigation }: NoticiasNavProps) {
                             mode="contained"
                             style={ContainerStyles.mainButton}
                             textColor="#fff"
-                            // onPress={handleEdit}
+                            onPress={async () => {
+                                await handleEdit()
+                                await generateEvents()
+                            }}
                         >
                             Salvar Alterações
                         </Button>

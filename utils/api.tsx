@@ -1,10 +1,22 @@
 import { CronogramaType, FullUsuarioType, NoticiaType, UsuarioType } from "./types"
 
-type NoticiaRequest = {
+type NoticiaAddRequest = {
     data: NoticiaType,
     filename_orig: string,
     img: string,
     file_mime: string,
+    id_user: number
+}
+
+type NoticiaEditRequest = {
+    data: NoticiaType,
+    id_user: number,
+    image_altered: boolean,
+    img_file?: {
+        filename_orig: string,
+        img: string,
+        file_mime: string,
+    }
 }
 
 export class Api {
@@ -108,7 +120,7 @@ export class Api {
         } else return news
     }
 
-    public async registerNews(data: NoticiaRequest, xUserLogged: number) {
+    public async registerNews(data: NoticiaAddRequest, xUserLogged: number) {
         const req = await fetch(`${this.defaultUrl}/noticias/register`, {
             method: 'POST',
             headers: {
@@ -120,10 +132,57 @@ export class Api {
                 data_not: data.data.data_not,
                 img: data.img,
                 file_mime: data.file_mime,
-                filename_orig: data.filename_orig
+                filename_orig: data.filename_orig,
+                id_user: data.id_user
             }),
         })
         return req.status
+    }
+
+    public async updateNews(data: NoticiaEditRequest, xUserLogged: number) {
+        const reqFields = await fetch(`${this.defaultUrl}/noticias/update`, {
+            method: 'POST',
+            headers: {
+                "x-user-logged": xUserLogged.toString()
+            },
+            body: JSON.stringify({
+                id_not: data.data.id_not,
+                mmanchete_not: data.data.mmanchete_not,
+                desc_not: data.data.desc_not,
+                data_not: data.data.data_not,
+                midia_not: data.data.midia_not,
+                id_user: data.id_user,
+
+                image_altered: data.image_altered,
+                img_file: {
+                    img: data.img_file.img ?? null,
+                    file_mime: data.img_file.file_mime ?? null,
+                    filename_orig: data.img_file.filename_orig ?? null,
+                },
+            }),
+        })
+        console.log('REQFIELDS FINISHED')
+        if (data.image_altered) {
+            const reqFotos = await fetch(`${this.defaultUrl}/noticias/midia`, {
+                method: 'POST',
+                headers: {
+                    "x-user-logged": xUserLogged.toString()
+                },
+                body: JSON.stringify({
+                    id_not: data.data.id_not,
+                    midia_not: data.data.midia_not,
+                    image_altered: data.image_altered,
+                    img_file: {
+                        img: data.img_file.img ?? null,
+                        file_mime: data.img_file.file_mime ?? null,
+                        filename_orig: data.img_file.filename_orig ?? null,
+                    },
+                }),
+            })
+            console.log(`REQFOTOS FINISHED WITH STATUS ${reqFotos.status}`)
+            console.log(`REQFOTOS BODY: ${JSON.stringify((await reqFotos.json()))}`)
+        }
+        return reqFields.status
     }
 
     public async AuthUsuario(username: string, senha: string): Promise<UsuarioType> {

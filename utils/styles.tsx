@@ -190,7 +190,8 @@ export const ContainerStyles = StyleSheet.create({
     },
     imagemCard: {
         height: 200,
-        resizeMode: "cover",
+        resizeMode: 'contain',
+        objectFit: 'contain',
         borderRadius: 10,
         marginVertical: 10,
     },
