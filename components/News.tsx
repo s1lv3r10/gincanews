@@ -139,9 +139,11 @@ export default function News({ navigation }: NoticiasNavProps) {
     };
 
     // Excluir notícia
-    // const handleDelete = (id: number) => {
-    //     setNoticias(noticias.filter((n) => n.id !== id));
-    // };
+    const handleDelete = async (id_not: number) => {
+        // setNoticias(noticias.filter((n) => n.id !== id));
+        await api.deleteNews(id_not, parseInt(id))
+        await generateEvents()
+    };
 
     // Abrir modal de edição
     const abrirEdicao = (noticia: NoticiaType) => {
@@ -200,7 +202,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                                             <IconButton
                                                 icon="delete"
                                                 size={20}
-                                                // onPress={() => handleDelete(item.id)}
+                                                onPress={() => handleDelete(item.id_not)}
                                             />
                                         </View>
                                     )

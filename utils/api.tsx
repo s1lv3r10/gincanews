@@ -185,6 +185,19 @@ export class Api {
         return reqFields.status
     }
 
+    public async deleteNews(id_not: number, xUserLogged: number) {
+        const req = await fetch(`${this.defaultUrl}/noticias/delete`, {
+            method: 'DELETE',
+            headers: {
+                "x-user-logged": xUserLogged.toString()
+            },
+            body: JSON.stringify({
+                id_not: id_not
+            }),
+        })
+        return req.status
+    }
+
     public async AuthUsuario(username: string, senha: string): Promise<UsuarioType> {
         const req = await fetch(`${this.defaultUrl}/usuarios/auth`, {
             method: 'POST',
