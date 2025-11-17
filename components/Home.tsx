@@ -1,10 +1,10 @@
-import { View, ScrollView, ImageBackground } from "react-native";
+import { View, ScrollView, ImageBackground, RefreshControl } from "react-native";
 import * as SecureStore from 'expo-secure-store'
 import { Text, useTheme, Card, Button, TouchableRipple } from "react-native-paper";
 import { ContainerStyles, ThemeType } from '../utils/styles';
 import { CronogramaType, HomeNavProps, NoticiaType } from "../utils/types";
 import { Api } from "../utils/api";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 
 export default function Home({ navigation }: HomeNavProps) {
@@ -17,19 +17,27 @@ export default function Home({ navigation }: HomeNavProps) {
     const [eves, setEves] = useState<CronogramaType[]>([])
     const [loading, setLoading] = useState(true)
 
+    const load = async () => {
+        const user = await api.getUsuario(parseInt(id))
+
+        const eves = await api.getCronos(user[0].em_user)
+        const news = await api.getAllNews()
+
+        setEves(eves)
+        setNews(news)
+    }
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true);
+        await load()
+        setRefreshing(false);
+    }, []);
+
+
     useEffect(() => {
         (async () => {
-            const user = await api.getUsuario(parseInt(id))
-
-            const eves = await api.getCronos(user[0].em_user)
-            const news = await api.getAllNews()
-            // console.log(news)
-            console.log(eves)
-            console.log(news)
-
-            setEves(eves)
-            setNews(news)
-
+            await load()
             setLoading(false)
         })()
     }, [])
@@ -57,7 +65,12 @@ export default function Home({ navigation }: HomeNavProps) {
                 source={back}
                 resizeMode="cover"
             >
-                <ScrollView contentContainerStyle={{ padding: 16, zIndex: 1 }}>
+                <ScrollView 
+                    contentContainerStyle={{ padding: 16, zIndex: 1 }}
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                    }
+                >
                     {/* Card de notícia */}
                     {
                         !loading && (news.length > 0)
@@ -106,12 +119,22 @@ export default function Home({ navigation }: HomeNavProps) {
                                         Próximo Evento
                                     </Text>
                                     <Text variant="bodyMedium" style={ContainerStyles.cardText}>
-                                        {loading ? '...' : eves[0].desc_cono}
-                                        {/* lkjl */}
+                                        {
+                                            loading 
+                                            ? '...' 
+                                            : eves.length > 0 
+                                            ? eves[0].desc_cono 
+                                            : '...'
+                                        }
                                     </Text>
                                     <Text variant="bodyLarge" style={ContainerStyles.cardDate}>
-                                        {loading ? '...' : new Date(eves[0].data_crono).toLocaleString('pt-BR', { day: '2-digit', month: 'short' })}
-                                        {/* lkajslf */}
+                                        {
+                                            loading 
+                                            ? '...' 
+                                            : eves.length > 0
+                                            ? new Date(eves[0].data_crono).toLocaleString('pt-BR', { day: '2-digit', month: 'short' })
+                                            : '...'
+                                        }
                                     </Text>
                                 </Card.Content>
                             </Card>
@@ -124,12 +147,22 @@ export default function Home({ navigation }: HomeNavProps) {
                                         Próximo Evento
                                     </Text>
                                     <Text variant="bodyMedium" style={ContainerStyles.cardText}>
-                                        {loading ? '...' : eves[1].desc_cono}
-                                        {/* asfklasjf */}
+                                        {
+                                            loading 
+                                            ? '...' 
+                                            : eves.length > 1 
+                                            ? eves[1].desc_cono 
+                                            : '...'
+                                        }
                                     </Text>
                                     <Text variant="bodyLarge" style={ContainerStyles.cardDate}>
-                                        {loading ? '...' : new Date(eves[1].data_crono).toLocaleString('pt-BR', { day: '2-digit', month: 'short' })}
-                                        {/* aslfkjal */}
+                                        {
+                                            loading 
+                                            ? '...' 
+                                            : eves.length > 1
+                                            ? new Date(eves[1].data_crono).toLocaleString('pt-BR', { day: '2-digit', month: 'short' })
+                                            : '...'
+                                        }
                                     </Text>
                                 </Card.Content>
                             </Card>

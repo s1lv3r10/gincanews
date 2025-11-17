@@ -52,8 +52,24 @@ export default function Cronograma({ navigation }: CronogramaNavProps) {
                             <View style={ContainerStyles.eventoContainer}>
                                 {/* Data */}
                                 <View style={ContainerStyles.dataContainer}>
-                                    <Text style={global ? ContainerStyles.diaGlobal : ContainerStyles.diaEM}>{data.getDate()}</Text>
-                                    <Text style={global ? ContainerStyles.mesGlobal : ContainerStyles.mesEM}>{data.toLocaleString('pt-BR', { month: 'short' })}</Text>
+                                    <Text 
+                                        style={
+                                            global 
+                                            ? ContainerStyles.diaGlobal 
+                                            : ContainerStyles.diaEM
+                                        }
+                                    >
+                                        {data.getDate()}
+                                    </Text>
+                                    <Text 
+                                        style={
+                                            global 
+                                            ? ContainerStyles.mesGlobal 
+                                            : ContainerStyles.mesEM
+                                        }
+                                    >
+                                        {data.toLocaleString('pt-BR', { month: 'short' })}
+                                    </Text>
                                 </View>
                                 {/* Texto */}
                                 <View

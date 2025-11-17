@@ -107,7 +107,13 @@ export default function News({ navigation }: NoticiasNavProps) {
         if (addNoticia.data_not == undefined) {
             addNoticia.data_not = new Date().toISOString().substring(0, 10)
         }
-        const result = await api.registerNews({ data: addNoticia, filename_orig: fotoMeta.filename, img: fotoB64, file_mime: fotoMeta.mime, id_user: parseInt(id) }, parseInt(id))
+        const result = await api.registerNews({ 
+            data: addNoticia, 
+            filename_orig: fotoMeta.filename, 
+            img: fotoB64, 
+            file_mime: fotoMeta.mime, 
+            id_user: parseInt(id) 
+        }, parseInt(id))
         console.log(result)
 
         setVisibleAdd(false);
@@ -228,13 +234,13 @@ export default function News({ navigation }: NoticiasNavProps) {
     
     return (
         <View style={{ flex: 1 }}>
-            <ImageBackground source={back} resizeMode="cover">
+            <ImageBackground source={back} resizeMode="cover" style={ContainerStyles.background}>
                 <ScrollView>
                     <View style={{ flex: 1, padding: 16 }}>
                         <View style={ContainerStyles.Topo}>
                             <View style={{ flexDirection: "row", alignItems: 'center' }}>
                                 <Text style={[ContainerStyles.Title, { marginRight: -10 }]}>
-                                    Últimos Eventos
+                                    Últimas Notícias
                                 </Text>
                                 {
                                     authorized
@@ -407,7 +413,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                         {foto ? (
                             <Image
                                 source={{ uri: editNoticia ? editNoticia.midia_not : '' }}
-                                style={{ width: "100%", height: 150, marginBottom: 10 }}
+                                style={{ maxWidth: 500, maxHeight: 500, minHeight: 250, marginBottom: 10, objectFit: 'contain' }}
                             />
                         ) : null}
                         <Button
