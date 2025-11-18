@@ -83,13 +83,13 @@ export default function Home({ navigation }: HomeNavProps) {
                                         Última Notícia
                                     </Text>
                                     <Text style={ContainerStyles.cardTitle}>
-                                        {loading ? '...' : news[0].mmanchete_not }
+                                        {loading ? '...' : news[news.length - 1].mmanchete_not }
                                     </Text>
                                     <Text style={ContainerStyles.cardSubTitle}>
-                                        {loading ? '...' : new Date(news[0].data_not).toLocaleString('pt-BR', { dateStyle: 'long' })}
+                                        {loading ? '...' : new Date(news[news.length - 1].data_not).toLocaleString('pt-BR', { dateStyle: 'long' })}
                                     </Text>
                                 </Card.Content>
-                                <Card.Cover source={{ uri: loading ? 'https://picsum.photos/700' : news[0].midia_not == 'SEM_MIDIA' ? 'https://picsum.photos/700' : news[0].midia_not }} />
+                                <Card.Cover source={{ uri: loading ? 'https://picsum.photos/700' : news[news.length - 1].midia_not == 'SEM_MIDIA' ? 'https://picsum.photos/700' : news[news.length - 1].midia_not }} />
                                 <Card.Actions style={{ justifyContent: 'center' }}>
                                     <Button
                                         mode="outlined"
@@ -192,7 +192,7 @@ export default function Home({ navigation }: HomeNavProps) {
 
                         {
                             news.length > 0 ? (
-                                news.map((noticia: NoticiaType) => {
+                                news.reverse().map((noticia: NoticiaType) => {
                                     return (
                                         <MinimalNoticia mmanchete_not={noticia.mmanchete_not} autor_not={noticia.autor_not} key={noticia.id_not} />
                                     )

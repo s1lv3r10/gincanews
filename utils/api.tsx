@@ -219,7 +219,6 @@ export class Api {
     }
 
     public async RegisterUsuario(
-        email: string,
         senha: string,
         login: string,
         em: string,
@@ -228,13 +227,13 @@ export class Api {
         const req = await fetch(`${this.defaultUrl}/usuarios/register`, {
             method: 'POST',
             body: JSON.stringify({
-                email_user: email,
                 senha_user: senha,
                 login_user: login,
                 em_user: em,
                 nome_user: nome
             })
         })
+        console.log(req.status)
     }
 
     public async updateUsuario(
@@ -247,6 +246,9 @@ export class Api {
     ): Promise<number> {
         const req = await fetch(`${this.defaultUrl}/usuarios/update`, {
             method: 'POST',
+            headers: {
+                "x-user-logged": id.toString()
+            },
             body: JSON.stringify({
                 id_user: id,
                 email_user: email,

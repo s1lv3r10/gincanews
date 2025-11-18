@@ -210,7 +210,7 @@ function RootStack() {
         // In a production app, we need to send user data to server and get a token
         // We will also need to handle errors if sign up failed
         const api = new Api()
-        await api.RegisterUsuario(data.email, data.senha, data.login, data.em, data.nome)
+        await api.RegisterUsuario(data.senha, data.login, data.em, data.nome)
       },
     }), [])
 

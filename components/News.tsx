@@ -263,7 +263,7 @@ export default function News({ navigation }: NoticiasNavProps) {
                         {
                             news.length > 0
                             ? (
-                                news.map((n: NoticiaType) => (
+                                news.reverse().map((n: NoticiaType) => (
                                     <NoticiasCard key={n.id_not} item={n} />
                                 ))
                             )

@@ -195,16 +195,6 @@ export default function Info({ navigation }: InfoNavProps) {
                                     onChangeText={t => setUserEdit({...userEdit, nome_user: t})}
                                 />
 
-                                <Text style={ContainerStyles.cardTitle2}>E-mail</Text>
-                                <TextInput
-                                    label="E-mail"
-                                    mode="outlined"
-                                    style={ContainerStyles.input}
-                                    outlineColor="#B20000"
-                                    activeOutlineColor="#B20000"
-                                    defaultValue={userEdit.email_user}
-                                />
-
                                 <Text style={ContainerStyles.cardTitle2}>Senha</Text>
                                 <TextInput
                                     label="Senha"
@@ -260,7 +250,7 @@ export default function Info({ navigation }: InfoNavProps) {
                                     onPress={async () => {
                                         // ver se as credenciais tao certas
                                         const successCredential: boolean = (await checkCredentials(
-                                            { email: userEdit.email_user, senha: userEdit.senhaOld}
+                                            { username: userEdit.login_user, senha: userEdit.senhaOld}
                                         )) == 0
                                         if (successCredential) {
                                             // editar

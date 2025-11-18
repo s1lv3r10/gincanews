@@ -181,17 +181,6 @@ export default function Start({ navigation }: HomeNavProps) {
                 onChangeText={t => setRegisterLogin(t)}
               />
 
-              <Text style={ContainerStyles.cardTitle2}>Email</Text>
-              <TextInput
-                label="Email"
-                mode="outlined"
-                style={ContainerStyles.input}
-                outlineColor="#B20000"
-                activeOutlineColor="#B20000"
-                defaultValue={registerEmail}
-                onChangeText={t => setRegisterEmail(t)}
-              />
-
               <Text style={ContainerStyles.cardTitle2}>Senha</Text>
               <TextInput
                 label="Senha"
@@ -228,7 +217,7 @@ export default function Start({ navigation }: HomeNavProps) {
                 }
               />
 
-              <Text style={ContainerStyles.cardTitle2}>EM (digite como "EM(numero)"")</Text>
+              <Text style={ContainerStyles.cardTitle2}>EM (digite como "EM(numero)")</Text>
               <TextInput
                 label="EM"
                 mode="outlined"
@@ -250,7 +239,6 @@ export default function Start({ navigation }: HomeNavProps) {
                     nome: registerNome,
                     login: registerLogin,
                     senha: registerSenha,
-                    email: registerEmail,
                     em: registerEm
                   })
                   setSucessoCad(true)
