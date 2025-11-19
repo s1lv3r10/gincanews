@@ -105,7 +105,7 @@ export default function Start({ navigation }: HomeNavProps) {
                 {/* Botão Entrar */}
                 <Button
                   mode="contained"
-                  style={ContainerStyles.mainButton}
+                  style={[ContainerStyles.mainButton, {marginTop: -20}]}
                   labelStyle={{ fontSize: 16, color: "#fff" }}
                   onPress={async () => {
                     const credentialsValid = await checkCredentials({ username: email, senha: senha })

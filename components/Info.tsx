@@ -121,6 +121,12 @@ export default function Info({ navigation }: InfoNavProps) {
                                         <Text style={ContainerStyles.subTitle}>
                                             Você pode diferenciá-los através das cores da data, vermelho para o Cronograma Global e cinza para o Cronograma do EM
                                         </Text>
+                                        <Text style={ContainerStyles.txt}>
+                                            "Onde posso aprender mais sobre o aplicativo?"
+                                        </Text>
+                                        <Text style={ContainerStyles.subTitle}>
+                                            O manual do usuário está disponível para download na url https://sdstcc.github.io/gincanews/ajuda.html
+                                        </Text>
                                     </View>
                                 </>
                             )
@@ -144,6 +150,12 @@ export default function Info({ navigation }: InfoNavProps) {
                                         </Text>
                                         <Text style={ContainerStyles.subTitle}>
                                             Sim, é possível editar artigos colocados por outros usuários.
+                                        </Text>
+                                        <Text style={ContainerStyles.txt}>
+                                            "Onde posso aprender mais sobre o aplicativo?"
+                                        </Text>
+                                        <Text style={ContainerStyles.subTitle}>
+                                            O manual do administrador está disponível para download na url https://sdstcc.github.io/gincanews/ajuda.html, e necessita da senha "adminfprestes123".
                                         </Text>
                                     </View>
                                 </>
@@ -195,24 +207,6 @@ export default function Info({ navigation }: InfoNavProps) {
                                     onChangeText={t => setUserEdit({...userEdit, nome_user: t})}
                                 />
 
-                                <Text style={ContainerStyles.cardTitle2}>Senha</Text>
-                                <TextInput
-                                    label="Senha"
-                                    mode="outlined"
-                                    style={ContainerStyles.input}
-                                    outlineColor="#B20000"
-                                    activeOutlineColor="#B20000"
-                                    secureTextEntry={!senhaVisivel}
-                                    right={
-                                        <TextInput.Icon
-                                            icon={senhaVisivel ? "eye-off" : "eye"}
-                                            onPress={() => setSenhaVisivel(!senhaVisivel)}
-                                        />
-                                    }
-                                    defaultValue={userEdit.senhaOld}
-                                    onChangeText={t => setUserEdit({...userEdit, senhaOld: t})}
-                                />
-
                                 <Text style={ContainerStyles.cardTitle2}>Nova Senha</Text>
                                 <TextInput
                                     label="Nova senha (opcional)"
@@ -240,6 +234,23 @@ export default function Info({ navigation }: InfoNavProps) {
                                     activeOutlineColor="#B20000"
                                     defaultValue={userEdit.em_user}
                                     onChangeText={t => setUserEdit({...userEdit, em_user: t})}
+                                />
+                                <Text style={ContainerStyles.cardTitle2}>Insira sua senha atual para confirmar as mudanças</Text>
+                                <TextInput
+                                    label="Senha"
+                                    mode="outlined"
+                                    style={ContainerStyles.input}
+                                    outlineColor="#B20000"
+                                    activeOutlineColor="#B20000"
+                                    secureTextEntry={!senhaVisivel}
+                                    right={
+                                        <TextInput.Icon
+                                            icon={senhaVisivel ? "eye-off" : "eye"}
+                                            onPress={() => setSenhaVisivel(!senhaVisivel)}
+                                        />
+                                    }
+                                    defaultValue={userEdit.senhaOld}
+                                    onChangeText={t => setUserEdit({...userEdit, senhaOld: t})}
                                 />
 
                                 <Button
